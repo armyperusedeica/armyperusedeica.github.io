@@ -6,20 +6,22 @@
     <title>ARMY PERÚ Sede Ica</title>
     <meta
       name="description"
-      content="Página oficial de comunidad para ARMY PERÚ Sede Ica: calendario, redes, streaming, logros y Discord."
+      content="Página comunitaria de ARMY PERÚ Sede Ica: calendario, redes, streaming y Discord."
     />
-    <meta name="theme-color" content="#d30016" />
+    <meta name="theme-color" content="#bd0018" />
     <meta property="og:title" content="ARMY PERÚ Sede Ica" />
-    <meta property="og:description" content="Calendario, actualizaciones y actividades de ARMY PERÚ Sede Ica." />
+    <meta property="og:description" content="Calendario, actualizaciones, streaming y actividades de ARMY PERÚ Sede Ica." />
     <meta property="og:image" content="assets/logo-ica.png" />
     <link rel="icon" href="assets/logo-ica.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
 
   <body>
+    <div class="site-bg" aria-hidden="true"></div>
+
     <div class="site-shell">
       <header class="topbar" id="top">
-        <a class="brand" href="#top" aria-label="Inicio ARMY PERÚ Sede Ica">
+        <a class="brand" href="#inicio" aria-label="Inicio ARMY PERÚ Sede Ica">
           <img src="assets/logo-ica.png" alt="Logo ARMY PERÚ Sede Ica" />
           <span>ARMY PERÚ<br /><strong>Sede Ica</strong></span>
         </a>
@@ -29,70 +31,85 @@
         </button>
 
         <nav class="nav" id="mainNav" aria-label="Navegación principal">
-          <a href="#calendario">Calendario</a>
-          <a href="#redes">Redes</a>
-          <a href="#streaming">Streaming</a>
-          <a href="#discord">Discord</a>
-          <a href="#admin">Admins</a>
+          <a class="nav-link" href="#inicio">Inicio</a>
+
+          <div class="nav-item has-dropdown">
+            <a class="nav-link" href="#calendario">Calendario <span class="chevron">⌄</span></a>
+            <div class="dropdown-menu" aria-label="Opciones de calendario">
+              <a href="#calendario" data-calendar-filter="all">Agenda completa</a>
+              <a href="#calendario" data-calendar-filter="sede">Eventos Sede Ica</a>
+              <a href="#calendario" data-calendar-filter="bts">BTS oficial</a>
+            </div>
+          </div>
+
+          <div class="nav-item has-dropdown">
+            <a class="nav-link" href="#redes">Redes <span class="chevron">⌄</span></a>
+            <div class="dropdown-menu" aria-label="Opciones de redes">
+              <a href="#redes" data-social-filter="all">Todas las redes</a>
+              <a href="#redes" data-social-filter="facebook">Facebook</a>
+              <a href="#redes" data-social-filter="twitter">X / Twitter</a>
+              <a href="#redes" data-social-filter="instagram">Instagram</a>
+              <a href="#redes" data-social-filter="tiktok">TikTok</a>
+            </div>
+          </div>
+
+          <div class="nav-item has-dropdown">
+            <a class="nav-link" href="#streaming">Streaming <span class="chevron">⌄</span></a>
+            <div class="dropdown-menu" aria-label="Opciones de streaming">
+              <a href="#streaming" data-stream-filter="all">Panel completo</a>
+              <a href="#streaming" data-stream-filter="youtube">YouTube</a>
+              <a href="#streaming" data-stream-filter="spotify">Spotify</a>
+              <a href="#streaming" data-stream-filter="apple music">Apple Music</a>
+            </div>
+          </div>
+
+          <a class="nav-link nav-cta" href="#discord">Discord</a>
         </nav>
       </header>
 
       <main>
-        <section class="hero section-anchor" aria-labelledby="hero-title">
-          <div class="hero-copy">
-            <p class="eyebrow">Comunidad ARMY en Ica</p>
-            <h1 id="hero-title">ARMY PERÚ <span>Sede Ica</span></h1>
-            <p class="hero-text">
-              Actividades, calendario, streaming, campañas y actualizaciones reunidas en un solo lugar.
-            </p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="#calendario">Ver calendario</a>
-              <a class="btn btn-ghost" id="discordHeroBtn" href="#discord">Unirme a Discord</a>
+        <section class="view view-home active" id="inicio" aria-labelledby="hero-title">
+          <div class="hero">
+            <div class="hero-copy">
+              <p class="eyebrow">Comunidad ARMY en Ica</p>
+              <h1 id="hero-title">ARMY PERÚ <span>Sede Ica</span></h1>
+              <p class="hero-text">
+                Actividades, calendario, streaming, campañas y actualizaciones reunidas en un solo lugar.
+              </p>
+              <div class="hero-actions">
+                <a class="btn btn-primary" href="#calendario">Ver calendario</a>
+                <a class="btn btn-ghost" id="discordHeroBtn" href="#discord">Unirme a Discord</a>
+              </div>
             </div>
-          </div>
 
-          <div class="hero-media" aria-label="Imagen destacada">
-            <img src="assets/group-photo.png" alt="Foto grupal destacada" />
-            <div class="hero-logo-card">
-              <img src="assets/logo-ica.png" alt="Logo ARMY PERÚ Sede Ica" />
+            <div class="hero-media" aria-label="Imagen destacada">
+              <img src="assets/group-photo.png" alt="Foto grupal destacada" />
+              <div class="hero-logo-card">
+                <img src="assets/logo-ica.png" alt="Logo ARMY PERÚ Sede Ica" />
+              </div>
             </div>
-          </div>
 
-          <div class="marquee" aria-hidden="true">
-            <span>ARMY PERÚ SEDE ICA · STREAMING · EVENTOS · COMUNIDAD ·</span>
-            <span>ARMY PERÚ SEDE ICA · STREAMING · EVENTOS · COMUNIDAD ·</span>
+            <div class="marquee" aria-hidden="true">
+              <div class="marquee-track">
+                <span>ARMY PERÚ SEDE ICA · STREAMING · EVENTOS · COMUNIDAD · BTS ·</span>
+                <span>ARMY PERÚ SEDE ICA · STREAMING · EVENTOS · COMUNIDAD · BTS ·</span>
+                <span>ARMY PERÚ SEDE ICA · STREAMING · EVENTOS · COMUNIDAD · BTS ·</span>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section class="intro-grid" aria-label="Accesos rápidos">
-          <article>
-            <span class="number">01</span>
-            <h2>Calendario</h2>
-            <p>Eventos de la sede y fechas oficiales diferenciadas por color.</p>
-          </article>
-          <article>
-            <span class="number">02</span>
-            <h2>Redes</h2>
-            <p>Actualizaciones de Facebook, X/Twitter, Instagram y TikTok.</p>
-          </article>
-          <article>
-            <span class="number">03</span>
-            <h2>Streaming</h2>
-            <p>Metas, avances y logros de la base en YouTube, Spotify y Apple Music.</p>
-          </article>
-        </section>
-
-        <section class="calendar-section section-anchor" id="calendario" aria-labelledby="calendar-title">
-          <div class="section-heading">
+        <section class="view page-view" id="calendario" aria-labelledby="calendar-title">
+          <div class="page-hero slim">
             <p class="eyebrow">Agenda</p>
             <h2 id="calendar-title">Calendario de actividades</h2>
             <p>
-              Los eventos marcados como <strong>Sede Ica</strong> pertenecen a la fanbase local. Los eventos
-              marcados como <strong>BTS oficial</strong> corresponden a fechas o actividades oficiales que ustedes agreguen o conecten.
+              Diferencia eventos de la sede y fechas oficiales de BTS. Las admins pueden actualizar los eventos desde
+              <code>data/events.json</code> o conectar calendarios públicos en <code>data/config.json</code>.
             </p>
           </div>
 
-          <div class="calendar-tools">
+          <div class="calendar-tools panel-card">
             <div class="calendar-nav">
               <button class="icon-btn" id="prevMonth" aria-label="Mes anterior">‹</button>
               <h3 id="currentMonth">Mes</h3>
@@ -106,93 +123,98 @@
           </div>
 
           <div class="calendar-layout">
-            <div class="calendar-card">
+            <div class="calendar-card panel-card">
               <div class="calendar-weekdays" aria-hidden="true">
                 <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
               </div>
               <div class="calendar-grid" id="calendarGrid"></div>
             </div>
 
-            <aside class="event-panel" aria-labelledby="event-panel-title">
-              <div class="event-panel-header">
-                <p class="eyebrow">Próximamente</p>
-                <h3 id="event-panel-title">Eventos del mes</h3>
-              </div>
-              <div class="legend">
-                <span><i class="dot dot-sede"></i>Sede Ica</span>
-                <span><i class="dot dot-bts"></i>BTS oficial</span>
+            <aside class="event-panel panel-card" aria-labelledby="event-panel-title">
+              <div class="panel-topline">
+                <div>
+                  <p class="eyebrow">Próximamente</p>
+                  <h3 id="event-panel-title">Eventos del mes</h3>
+                </div>
+                <div class="legend">
+                  <span><i class="dot dot-sede"></i>Sede</span>
+                  <span><i class="dot dot-bts"></i>BTS</span>
+                </div>
               </div>
               <div id="eventList" class="event-list"></div>
             </aside>
           </div>
 
-          <div class="calendar-embed-wrap" id="calendarEmbedWrap" hidden>
-            <h3>Calendarios conectados</h3>
-            <p>Esta zona se activa cuando coloquen enlaces públicos de Google Calendar en <code>data/config.json</code>.</p>
+          <div class="calendar-embed-wrap panel-card" id="calendarEmbedWrap" hidden>
+            <div class="panel-topline">
+              <div>
+                <p class="eyebrow">Calendarios conectados</p>
+                <h3>Google Calendar</h3>
+              </div>
+            </div>
+            <p class="muted-copy">Esta zona aparece cuando coloquen enlaces públicos de Google Calendar en <code>data/config.json</code>.</p>
             <div class="embed-grid" id="calendarEmbeds"></div>
           </div>
         </section>
 
-        <section class="social-section section-anchor" id="redes" aria-labelledby="social-title">
-          <div class="section-heading">
+        <section class="view page-view" id="redes" aria-labelledby="social-title">
+          <div class="page-hero slim">
             <p class="eyebrow">Actualizaciones</p>
             <h2 id="social-title">Redes oficiales de la sede</h2>
             <p>
-              Secciones separadas para Facebook, X/Twitter, Instagram y TikTok. Las publicaciones destacadas se editan desde
-              <code>data/social-updates.json</code>.
+              Publicaciones destacadas de Facebook, X/Twitter, Instagram y TikTok en un panel limpio para que la comunidad no se pierda nada.
             </p>
+          </div>
+
+          <div class="filter-strip panel-card" aria-label="Filtrar redes">
+            <button class="filter-btn social-filter active" data-social-button="all">Todas</button>
+            <button class="filter-btn social-filter" data-social-button="facebook">Facebook</button>
+            <button class="filter-btn social-filter" data-social-button="twitter">X/Twitter</button>
+            <button class="filter-btn social-filter" data-social-button="instagram">Instagram</button>
+            <button class="filter-btn social-filter" data-social-button="tiktok">TikTok</button>
           </div>
 
           <div class="social-grid" id="socialGrid"></div>
         </section>
 
-        <section class="streaming-section section-anchor" id="streaming" aria-labelledby="streaming-title">
-          <div class="section-heading">
+        <section class="view page-view" id="streaming" aria-labelledby="streaming-title">
+          <div class="page-hero slim">
             <p class="eyebrow">Base Ica</p>
             <h2 id="streaming-title">Logros y metas de streaming</h2>
             <p>
-              Panel editable para registrar campañas, metas y avances en YouTube, Spotify y Apple Music.
+              Control visual para campañas de YouTube, Spotify y Apple Music. Ideal para metas semanales, logros de la base y llamados de apoyo.
             </p>
           </div>
+
+          <div class="filter-strip panel-card" aria-label="Filtrar plataformas de streaming">
+            <button class="filter-btn stream-filter active" data-stream-button="all">Todo</button>
+            <button class="filter-btn stream-filter" data-stream-button="youtube">YouTube</button>
+            <button class="filter-btn stream-filter" data-stream-button="spotify">Spotify</button>
+            <button class="filter-btn stream-filter" data-stream-button="apple music">Apple Music</button>
+          </div>
+
           <div class="streaming-grid" id="streamingGrid"></div>
         </section>
 
-        <section class="discord-section section-anchor" id="discord" aria-labelledby="discord-title">
-          <div class="discord-card">
-            <div>
+        <section class="view page-view" id="discord" aria-labelledby="discord-title">
+          <div class="discord-layout">
+            <div class="discord-card panel-card">
               <p class="eyebrow">Comunidad</p>
               <h2 id="discord-title">Únete a nuestro Discord</h2>
               <p>
-                Coordina actividades, campañas de streaming, votaciones, proyectos y reuniones con la comunidad ARMY de Ica.
+                Coordina actividades, campañas de streaming, votaciones, proyectos, reuniones y dinámicas con la comunidad ARMY de Ica.
               </p>
+              <div class="discord-actions">
+                <a class="btn btn-primary" id="discordBtn" href="#" target="_blank" rel="noopener">Entrar al canal</a>
+                <a class="btn btn-ghost" href="#calendario">Ver próximas actividades</a>
+              </div>
             </div>
-            <a class="btn btn-primary" id="discordBtn" href="#" target="_blank" rel="noopener">Entrar al canal</a>
-          </div>
-        </section>
 
-        <section class="admin-section section-anchor" id="admin" aria-labelledby="admin-title">
-          <div class="section-heading compact">
-            <p class="eyebrow">Guía rápida</p>
-            <h2 id="admin-title">¿Cómo actualizan la página las admins?</h2>
-          </div>
-
-          <div class="admin-grid">
-            <article>
-              <h3>1. Eventos</h3>
-              <p>Editen <code>data/events.json</code>. Usen <code>type: "sede"</code> para actividades de Ica y <code>type: "bts"</code> para fechas oficiales.</p>
-            </article>
-            <article>
-              <h3>2. Redes</h3>
-              <p>Editen <code>data/social-updates.json</code> con el enlace, fecha, plataforma y texto de cada actualización destacada.</p>
-            </article>
-            <article>
-              <h3>3. Streaming</h3>
-              <p>Editen <code>data/streaming.json</code> para cambiar metas, avances, campañas y porcentajes.</p>
-            </article>
-            <article>
-              <h3>4. Enlaces</h3>
-              <p>Editen <code>data/config.json</code> para colocar Discord, Facebook, X/Twitter, Instagram, TikTok y calendarios públicos.</p>
-            </article>
+            <div class="discord-side panel-card">
+              <img src="assets/logo-ica.png" alt="Logo ARMY PERÚ Sede Ica" />
+              <h3>ARMY PERÚ Sede Ica</h3>
+              <p>Un espacio para organizar campañas, compartir avisos y mantener a la sede conectada.</p>
+            </div>
           </div>
         </section>
       </main>
@@ -202,7 +224,7 @@
         <p>
           ARMY PERÚ Sede Ica · Página comunitaria. Para información oficial, revisar siempre los canales oficiales correspondientes.
         </p>
-        <a href="#top">Volver arriba ↑</a>
+        <a href="#inicio">Volver al inicio ↑</a>
       </footer>
     </div>
 
