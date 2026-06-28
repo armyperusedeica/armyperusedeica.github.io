@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Reunión de coordinación de admins",
+    "date": "2026-07-06",
+    "startTime": "20:00",
+    "endTime": "21:00",
+    "type": "sede",
+    "location": "Discord",
+    "description": "Revisión de actividades, campañas de streaming y próximos proyectos de la sede.",
+    "link": ""
+  },
+  {
+    "title": "Streaming party — YouTube & Spotify",
+    "date": "2026-07-12",
+    "startTime": "19:00",
+    "endTime": "22:00",
+    "type": "sede",
+    "location": "Discord",
+    "description": "Sesión comunitaria para apoyar las metas de la base Ica.",
+    "link": ""
+  },
+  {
+    "title": "Cupsleeve / proyecto presencial",
+    "date": "2026-07-20",
+    "startTime": "16:00",
+    "endTime": "19:00",
+    "type": "sede",
+    "location": "Ica",
+    "description": "Actividad local de integración. Cambiar lugar y detalles cuando esté confirmado.",
+    "link": ""
+  },
+  {
+    "title": "Fecha oficial BTS — actualizar",
+    "date": "2026-07-18",
+    "startTime": "",
+    "endTime": "",
+    "type": "bts",
+    "location": "Canales oficiales",
+    "description": "Ejemplo de evento oficial. Reemplazar por una fecha real o conectarlo a un calendario público.",
+    "link": ""
+  }
+]

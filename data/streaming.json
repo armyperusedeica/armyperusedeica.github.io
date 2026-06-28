@@ -1,0 +1,35 @@
+[
+  {
+    "platform": "YouTube",
+    "project": "Meta semanal de reproducciones",
+    "current": "72% completado",
+    "target": "100%",
+    "progress": 72,
+    "status": "En campaña",
+    "updated": "2026-07-01",
+    "note": "Actualizar con el avance real de la base Ica.",
+    "url": ""
+  },
+  {
+    "platform": "Spotify",
+    "project": "Playlist focus",
+    "current": "48% completado",
+    "target": "100%",
+    "progress": 48,
+    "status": "En progreso",
+    "updated": "2026-07-01",
+    "note": "Registrar metas, playlists y logros semanales.",
+    "url": ""
+  },
+  {
+    "platform": "Apple Music",
+    "project": "Campaña de apoyo",
+    "current": "35% completado",
+    "target": "100%",
+    "progress": 35,
+    "status": "Inicio",
+    "updated": "2026-07-01",
+    "note": "Agregar datos validados por las admins.",
+    "url": ""
+  }
+]
