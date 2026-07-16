@@ -501,3 +501,39 @@ button, input, select { font: inherit; }
   .calendar-frame-wrap iframe { min-height: 620px; height: 72vh; }
   .site-footer { flex-direction: column; }
 }
+
+
+/* Live social embeds */
+.embed-card .twitter-timeline,
+.embed-card .tiktok-embed,
+.social-card .instagram-media,
+.social-card .tiktok-embed {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+}
+.embed-card .twitter-timeline {
+  border-radius: 14px;
+  overflow: hidden;
+}
+.social-card.with-embed {
+  grid-column: span 2;
+}
+.post-embed {
+  margin: 16px 0 12px;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 16px;
+}
+.instagram-post {
+  background: #fff;
+  padding: 6px;
+}
+.tiktok-post {
+  background: rgba(0,0,0,0.22);
+  padding: 6px;
+}
+@media (max-width: 760px) {
+  .social-card.with-embed { grid-column: span 1; }
+}

@@ -197,11 +197,11 @@ function renderSocialEmbeds() {
 
   if ((state.socialFilter === "all" || state.socialFilter === "twitter") && xUrl) {
     cards.push(`<section class="embed-card"><h3>X/Twitter</h3><a class="twitter-timeline" data-height="560" data-theme="dark" href="${escapeHTML(xUrl)}">Tweets de ARMY Perú Sede Ica</a></section>`);
-    loadScriptOnce("https://platform.twitter.com/widgets.js", "twitter-widgets");
+    loadScriptOnce("https://platform.twitter.com/widgets.js", "twitter-widgets", () => { if (window.twttr?.widgets?.load) window.twttr.widgets.load(grid); });
   }
 
   if ((state.socialFilter === "all" || state.socialFilter === "instagram") && instagramUrl) {
-    cards.push(`<section class="embed-card"><h3>Instagram</h3><div class="empty-box">Instagram no permite insertar un perfil completo de forma estable en webs externas. Usa el botón de perfil o agrega enlaces directos a posts en <strong>data/social-updates.json</strong>.</div></section>`);
+    cards.push(`<section class="embed-card"><h3>Instagram</h3><div class="empty-box"><strong>Instagram conectado.</strong><br>Por privacidad y permisos de Meta, el perfil completo no puede mostrarse como feed automático en una web estática. Abre el perfil desde el botón superior o agrega enlaces de publicaciones/reels en <strong>data/social-updates.json</strong> para que se incrusten aquí.</div></section>`);
   }
 
   if ((state.socialFilter === "all" || state.socialFilter === "tiktok") && tiktokUrl) {
@@ -214,6 +214,8 @@ function renderSocialEmbeds() {
 
   grid.innerHTML = cards.join("");
   grid.style.display = cards.length ? "grid" : "none";
+  if (window.twttr?.widgets?.load) window.twttr.widgets.load(grid);
+  if (window.instgrm?.Embeds?.process) window.instgrm.Embeds.process();
 }
 
 function renderSocialUpdates() {
@@ -234,16 +236,20 @@ function renderSocialUpdates() {
   grid.innerHTML = items.map((item) => {
     const platform = String(item.platform || "red").toUpperCase();
     const url = validUrl(item.url);
+    const inlineEmbed = renderInlinePostEmbed(item);
     return `
-      <article class="social-card">
+      <article class="social-card ${inlineEmbed ? "with-embed" : ""}">
         <span class="platform-badge">${escapeHTML(platform)}</span>
         <h3>${escapeHTML(item.title)}</h3>
         <time>${escapeHTML(formatDate(item.date))}</time>
         <p>${escapeHTML(item.text || "")}</p>
+        ${inlineEmbed}
         ${url ? `<a class="btn secondary" href="${escapeHTML(url)}" target="_blank" rel="noopener">Ver publicación</a>` : ""}
       </article>
     `;
   }).join("");
+  if (window.instgrm?.Embeds?.process) window.instgrm.Embeds.process();
+  if (window.twttr?.widgets?.load) window.twttr.widgets.load(grid);
 }
 
 function setSocialFilter(filter) {
@@ -321,13 +327,62 @@ function setupDiscord() {
   }
 }
 
-function loadScriptOnce(src, id) {
-  if (document.getElementById(id)) return;
+function loadScriptOnce(src, id, onload) {
+  const existing = document.getElementById(id);
+  if (existing) {
+    if (typeof onload === "function") setTimeout(onload, 50);
+    return;
+  }
   const script = document.createElement("script");
   script.id = id;
   script.src = src;
   script.async = true;
+  if (typeof onload === "function") script.addEventListener("load", onload, { once: true });
   document.body.appendChild(script);
+}
+
+function normalizeProfileUser(url, marker) {
+  const clean = String(url || "").split("?")[0].replace(/\/$/, "");
+  const part = clean.split(marker)[1] || "";
+  return part.split(/[/?#]/)[0].replace(/^@/, "");
+}
+
+function isInstagramPostUrl(url) {
+  return /instagram\.com\/(p|reel|tv)\//i.test(String(url || ""));
+}
+
+function isTikTokVideoUrl(url) {
+  return /tiktok\.com\/@[^/]+\/video\//i.test(String(url || ""));
+}
+
+function renderInlinePostEmbed(item) {
+  const platform = String(item.platform || "").toLowerCase();
+  const url = validUrl(item.url);
+  if (!url) return "";
+
+  if (platform === "instagram" && isInstagramPostUrl(url)) {
+    loadScriptOnce("https://www.instagram.com/embed.js", "instagram-embed-js", () => {
+      if (window.instgrm?.Embeds?.process) window.instgrm.Embeds.process();
+    });
+    return `
+      <div class="post-embed instagram-post">
+        <blockquote class="instagram-media" data-instgrm-permalink="${escapeHTML(url)}" data-instgrm-version="14"></blockquote>
+      </div>
+    `;
+  }
+
+  if (platform === "tiktok" && isTikTokVideoUrl(url)) {
+    loadScriptOnce("https://www.tiktok.com/embed.js", "tiktok-embed-js");
+    return `
+      <div class="post-embed tiktok-post">
+        <blockquote class="tiktok-embed" cite="${escapeHTML(url)}" style="max-width: 605px; min-width: 280px;">
+          <section><a target="_blank" href="${escapeHTML(url)}">Ver video en TikTok</a></section>
+        </blockquote>
+      </div>
+    `;
+  }
+
+  return "";
 }
 
 function showRoute(route) {

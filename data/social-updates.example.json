@@ -1,0 +1,16 @@
+[
+  {
+    "platform": "instagram",
+    "date": "2026-07-20",
+    "title": "Ejemplo de reel/post destacado",
+    "text": "Reemplazar este ejemplo por un enlace real.",
+    "url": "https://www.instagram.com/p/CODIGO/"
+  },
+  {
+    "platform": "tiktok",
+    "date": "2026-07-20",
+    "title": "Ejemplo de video destacado",
+    "text": "Reemplazar este ejemplo por un enlace real.",
+    "url": "https://www.tiktok.com/@usuario/video/1234567890"
+  }
+]

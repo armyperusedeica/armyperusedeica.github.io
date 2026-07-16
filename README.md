@@ -85,3 +85,36 @@ Sube directamente estos archivos y carpetas a la raíz del repositorio `armyperu
 - `assets/`
 - `data/`
 - `README.md`
+
+
+## Publicaciones en vivo en redes
+
+Esta versión ya incluye embeds oficiales para redes:
+
+- Facebook: muestra el timeline de una página pública usando `facebookPageUrl`.
+- X/Twitter: muestra el timeline del perfil usando `xProfileUrl`.
+- TikTok: muestra el perfil de creador usando `tiktokUrl`.
+- Instagram: no permite mostrar un feed completo de perfil en una web estática sin API/token. Para Instagram, agrega posts o reels destacados en `data/social-updates.json` y se insertarán como publicaciones embebidas.
+
+Ejemplo para Instagram o TikTok en `data/social-updates.json`:
+
+```json
+[
+  {
+    "platform": "instagram",
+    "date": "2026-07-20",
+    "title": "Post destacado",
+    "text": "Descripción breve del post.",
+    "url": "https://www.instagram.com/p/CODIGO/"
+  },
+  {
+    "platform": "tiktok",
+    "date": "2026-07-20",
+    "title": "Video destacado",
+    "text": "Descripción breve del video.",
+    "url": "https://www.tiktok.com/@usuario/video/1234567890"
+  }
+]
+```
+
+Nota: si ya editaste `data/config.json` directamente en GitHub, copia esos enlaces antes de reemplazar el archivo o vuelve a pegarlos después de subir esta versión.
