@@ -5,34 +5,29 @@ const FALLBACK_CONFIG = {
   xProfileUrl: "https://x.com/TU_USUARIO",
   instagramUrl: "https://www.instagram.com/TU_USUARIO/",
   tiktokUrl: "https://www.tiktok.com/@TU_USUARIO",
-  sedeCalendarEmbedUrl: "",
-  officialCalendarEmbedUrl: "https://calendar.google.com/calendar/embed?height=760&wkst=2&ctz=Asia%2FSeoul&showTitle=0&showPrint=0&showTabs=1&showCalendars=0&showTz=0&showNav=1&showDate=1&mode=MONTH&src=foreverpurple130613%40gmail.com&color=%23D81B60",
-  officialCalendarLabel: "BTS oficial",
-  officialCalendarCredit: "Calendario BTS oficial compartido por foreverpurple130613@gmail.com"
+  googleCalendarApiKey: "PEGA_AQUI_TU_API_KEY",
+  officialCalendarApiKey: "PEGA_AQUI_TU_API_KEY",
+  calendars: [
+    {
+      key: "sede",
+      type: "sede",
+      label: "Sede Ica",
+      calendarId: "ac1f7aecc7b1d38bcd41ecc85b33f23dab759578e8ca0c87d926ffcab9f74b0c@group.calendar.google.com",
+      timeZone: "America/Lima",
+      credit: "Calendario creado por ARMY Perú Sede Ica",
+      sourceUrl: "https://calendar.google.com/calendar/u/3?cid=YWMxZjdhZWNjN2IxZDM4YmNkNDFlY2M4NWIzM2YyM2RhYjc1OTU3OGU4Y2EwYzg3ZDkyNmZmY2FiOWY3NGIwY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
+    },
+    {
+      key: "bts",
+      type: "bts",
+      label: "BTS oficial",
+      calendarId: "foreverpurple130613@gmail.com",
+      timeZone: "Asia/Seoul",
+      credit: "Calendario BTS oficial compartido por foreverpurple130613@gmail.com",
+      sourceUrl: "https://calendar.google.com/calendar/u/0/newembed?src=foreverpurple130613@gmail.com&ctz=Asia/Seoul"
+    }
+  ]
 };
-
-const FALLBACK_EVENTS = [
-  {
-    title: "Reunión de coordinación de admins",
-    date: "2026-07-06",
-    startTime: "20:00",
-    endTime: "21:00",
-    type: "sede",
-    location: "Discord",
-    description: "Revisión de actividades, campañas de streaming y próximos proyectos de la sede.",
-    link: ""
-  },
-  {
-    title: "Streaming party — YouTube & Spotify",
-    date: "2026-07-12",
-    startTime: "19:00",
-    endTime: "22:00",
-    type: "sede",
-    location: "Discord",
-    description: "Sesión comunitaria para apoyar las metas de la base Ica.",
-    link: ""
-  }
-];
 
 const FALLBACK_SOCIAL = [
   {
@@ -107,6 +102,8 @@ const state = {
   socialFilter: "all",
   streamFilter: "all",
   events: [],
+  calendarSources: [],
+  calendarStatuses: [],
   social: [],
   streaming: [],
   config: FALLBACK_CONFIG
@@ -132,13 +129,200 @@ async function fetchJSON(path, fallback) {
   }
 }
 
+function isConfiguredApiKey(value) {
+  const key = String(value || "").trim();
+  return key && !key.includes("PEGA_AQUI") && !key.includes("TU_API_KEY");
+}
+
+function stripHTML(value) {
+  return String(value || "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function escapeHTML(value) {
+  return String(value || "").replace(/[&<>"']/g, (char) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#039;"
+  }[char]));
+}
+
+function safeUrl(value) {
+  const url = String(value || "").trim();
+  if (!url) return "";
+  return /^https?:\/\//i.test(url) ? url : "";
+}
+
+function normalizeCalendarSources(config) {
+  if (Array.isArray(config.calendars) && config.calendars.length) {
+    return config.calendars
+      .map((calendar) => ({
+        key: calendar.key || calendar.type,
+        type: calendar.type === "bts" ? "bts" : "sede",
+        label: calendar.label || (calendar.type === "bts" ? "BTS oficial" : "Sede Ica"),
+        calendarId: String(calendar.calendarId || "").trim(),
+        timeZone: calendar.timeZone || (calendar.type === "bts" ? "Asia/Seoul" : "America/Lima"),
+        credit: calendar.credit || "",
+        sourceUrl: calendar.sourceUrl || ""
+      }))
+      .filter((calendar) => calendar.calendarId);
+  }
+
+  return [
+    {
+      key: "sede",
+      type: "sede",
+      label: "Sede Ica",
+      calendarId: "ac1f7aecc7b1d38bcd41ecc85b33f23dab759578e8ca0c87d926ffcab9f74b0c@group.calendar.google.com",
+      timeZone: "America/Lima",
+      credit: "Calendario creado por ARMY Perú Sede Ica",
+      sourceUrl: "https://calendar.google.com/calendar/u/3?cid=YWMxZjdhZWNjN2IxZDM4YmNkNDFlY2M4NWIzM2YyM2RhYjc1OTU3OGU4Y2EwYzg3ZDkyNmZmY2FiOWY3NGIwY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
+    },
+    {
+      key: "bts",
+      type: "bts",
+      label: config.officialCalendarLabel || "BTS oficial",
+      calendarId: config.officialCalendarId || "foreverpurple130613@gmail.com",
+      timeZone: config.officialCalendarTimeZone || "Asia/Seoul",
+      credit: config.officialCalendarCredit || "Calendario BTS oficial compartido por foreverpurple130613@gmail.com",
+      sourceUrl: config.officialCalendarSourceUrl || "https://calendar.google.com/calendar/u/0/newembed?src=foreverpurple130613@gmail.com&ctz=Asia/Seoul"
+    }
+  ];
+}
+
+function getCalendarApiKey() {
+  return state.config.googleCalendarApiKey || state.config.officialCalendarApiKey || "";
+}
+
+function getApiFetchRange() {
+  const now = new Date();
+  return {
+    timeMin: new Date(now.getFullYear() - 1, 0, 1).toISOString(),
+    timeMax: new Date(now.getFullYear() + 2, 11, 31, 23, 59, 59).toISOString()
+  };
+}
+
+function googleDatePart(googleDate) {
+  if (!googleDate) return "";
+  if (googleDate.date) return googleDate.date;
+  if (googleDate.dateTime) return googleDate.dateTime.slice(0, 10);
+  return "";
+}
+
+function googleTimePart(googleDate) {
+  if (!googleDate || !googleDate.dateTime) return "";
+  return googleDate.dateTime.slice(11, 16);
+}
+
+function googleEventToLocalEvent(item, calendar) {
+  const date = googleDatePart(item.start);
+  if (!date) return null;
+
+  const htmlLink = safeUrl(item.htmlLink);
+  const description = stripHTML(item.description || "").slice(0, 320);
+
+  return {
+    title: stripHTML(item.summary || `Evento ${calendar.label}`),
+    date,
+    startTime: googleTimePart(item.start),
+    endTime: googleTimePart(item.end),
+    type: calendar.type,
+    sourceKey: calendar.key,
+    sourceLabel: calendar.label,
+    timeZone: calendar.timeZone,
+    location: stripHTML(item.location || (calendar.type === "bts" ? "Canales oficiales" : "Por confirmar")),
+    description: description || `Evento sincronizado desde ${calendar.label}.`,
+    link: htmlLink,
+    source: "google-calendar"
+  };
+}
+
+async function loadGoogleCalendarEvents(calendar) {
+  const apiKey = String(getCalendarApiKey()).trim();
+
+  if (!calendar.calendarId || !isConfiguredApiKey(apiKey)) {
+    return {
+      calendar,
+      status: {
+        type: calendar.type,
+        label: calendar.label,
+        state: "missing-key",
+        count: 0,
+        message: "Falta pegar la Google Calendar API key en data/config.json."
+      },
+      events: []
+    };
+  }
+
+  try {
+    const { timeMin, timeMax } = getApiFetchRange();
+    const params = new URLSearchParams({
+      key: apiKey,
+      singleEvents: "true",
+      orderBy: "startTime",
+      maxResults: "2500",
+      timeMin,
+      timeMax,
+      timeZone: calendar.timeZone
+    });
+
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendar.calendarId)}/events?${params.toString()}`;
+    const response = await fetch(url, { cache: "no-store" });
+
+    if (!response.ok) {
+      const detail = await response.text().catch(() => "");
+      throw new Error(`Google Calendar respondió ${response.status}. ${detail}`);
+    }
+
+    const payload = await response.json();
+    const items = Array.isArray(payload.items) ? payload.items : [];
+    const events = items.map((item) => googleEventToLocalEvent(item, calendar)).filter(Boolean);
+
+    return {
+      calendar,
+      status: {
+        type: calendar.type,
+        label: calendar.label,
+        state: "connected",
+        count: events.length,
+        message: `${events.length} evento${events.length === 1 ? "" : "s"} sincronizado${events.length === 1 ? "" : "s"}.`
+      },
+      events
+    };
+  } catch (error) {
+    console.warn(error);
+    return {
+      calendar,
+      status: {
+        type: calendar.type,
+        label: calendar.label,
+        state: "error",
+        count: 0,
+        message: "No se pudo sincronizar. Revisa que el calendario sea público, que la API key sea correcta y que Google Calendar API esté activada."
+      },
+      events: []
+    };
+  }
+}
+
+async function loadAllGoogleCalendarEvents() {
+  const results = await Promise.all(state.calendarSources.map(loadGoogleCalendarEvents));
+  state.calendarStatuses = results.map((result) => result.status);
+  return results.flatMap((result) => result.events);
+}
+
 function parseLocalDate(dateString) {
   const [year, month, day] = String(dateString).split("-").map(Number);
   return new Date(year, month - 1, day);
 }
 
 function formatMonth(date) {
-  return new Intl.DateTimeFormat("es-PE", { month: "long", year: "numeric" }).format(date);
+  const raw = new Intl.DateTimeFormat("es-PE", { month: "long", year: "numeric" }).format(date);
+  return raw.charAt(0).toUpperCase() + raw.slice(1);
 }
 
 function toDateKey(date) {
@@ -195,7 +379,11 @@ function renderCalendar() {
     const dateKey = toDateKey(cellDate);
     const dayEvents = state.events
       .filter((event) => event.date === dateKey && eventMatchesFilter(event))
-      .sort((a, b) => (a.startTime || "99:99").localeCompare(b.startTime || "99:99"));
+      .sort((a, b) => {
+        const typeOrder = a.type.localeCompare(b.type);
+        if (a.startTime || b.startTime) return (a.startTime || "99:99").localeCompare(b.startTime || "99:99");
+        return typeOrder;
+      });
 
     const day = document.createElement("div");
     day.className = "calendar-day";
@@ -221,15 +409,15 @@ function renderCalendar() {
       const chip = document.createElement("button");
       chip.className = `calendar-chip ${event.type}`;
       chip.textContent = event.title;
-      chip.title = event.title;
+      chip.title = `${event.sourceLabel}: ${event.title}`;
       chip.addEventListener("click", () => scrollToEvent(event));
       eventsWrap.appendChild(chip);
     });
 
     if (dayEvents.length > 3) {
       const more = document.createElement("span");
-      more.className = "calendar-chip sede";
-      more.textContent = `+${dayEvents.length - 3}`;
+      more.className = "calendar-chip more";
+      more.textContent = `+${dayEvents.length - 3} más`;
       eventsWrap.appendChild(more);
     }
 
@@ -244,6 +432,15 @@ function renderEventList() {
   const eventList = document.querySelector("#eventList");
   if (!eventList) return;
 
+  const title = document.querySelector("#event-panel-title");
+  if (title) {
+    title.textContent = state.calendarFilter === "bts"
+      ? "Eventos BTS oficiales"
+      : state.calendarFilter === "sede"
+        ? "Eventos de la sede"
+        : "Agenda completa";
+  }
+
   const month = state.date.getMonth();
   const year = state.date.getFullYear();
 
@@ -253,8 +450,8 @@ function renderEventList() {
       return eventDate.getMonth() === month && eventDate.getFullYear() === year && eventMatchesFilter(event);
     })
     .sort((a, b) => {
-      const byDate = a.date.localeCompare(b.date);
-      if (byDate !== 0) return byDate;
+      const dateDiff = String(a.date).localeCompare(String(b.date));
+      if (dateDiff !== 0) return dateDiff;
       return (a.startTime || "99:99").localeCompare(b.startTime || "99:99");
     });
 
@@ -270,19 +467,24 @@ function renderEventList() {
     article.className = "event-item";
     article.dataset.eventKey = `${event.date}-${event.title}`;
 
-    const typeLabel = event.type === "bts" ? "BTS oficial" : "Sede Ica";
+    const typeLabel = event.sourceLabel || (event.type === "bts" ? "BTS oficial" : "Sede Ica");
     const time = event.startTime ? `${event.startTime}${event.endTime ? ` – ${event.endTime}` : ""}` : "Todo el día";
+    const title = escapeHTML(event.title || "Evento");
+    const description = escapeHTML(event.description || "Sin descripción.");
+    const location = escapeHTML(event.location || "");
+    const link = safeUrl(event.link);
+    const zone = event.timeZone ? ` · ${escapeHTML(event.timeZone)}` : "";
 
     article.innerHTML = `
       <div class="event-meta">
-        <span class="badge ${event.type}">${typeLabel}</span>
+        <span class="badge ${event.type}">${escapeHTML(typeLabel)}</span>
         <span>${formatDate(event.date)}</span>
-        <span>${time}</span>
+        <span>${escapeHTML(time)}${zone}</span>
       </div>
-      <h4>${event.title}</h4>
-      <p>${event.description || "Sin descripción."}</p>
-      ${event.location ? `<p><strong>Lugar:</strong> ${event.location}</p>` : ""}
-      ${event.link ? `<a class="event-link" href="${event.link}" target="_blank" rel="noopener">Ver detalle</a>` : ""}
+      <h4>${title}</h4>
+      <p>${description}</p>
+      ${location ? `<p><strong>Lugar:</strong> ${location}</p>` : ""}
+      ${link ? `<a class="event-link" href="${link}" target="_blank" rel="noopener">Ver detalle</a>` : ""}
     `;
 
     eventList.appendChild(article);
@@ -290,8 +492,9 @@ function renderEventList() {
 }
 
 function scrollToEvent(event) {
+  renderEventList();
   const key = `${event.date}-${event.title}`;
-  const target = document.querySelector(`[data-event-key="${CSS.escape(key)}"]`);
+  const target = Array.from(document.querySelectorAll(".event-item")).find((item) => item.dataset.eventKey === key);
   if (!target) return;
   target.classList.add("highlight");
   target.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -304,7 +507,7 @@ function setCalendarFilter(filter) {
     button.classList.toggle("active", button.dataset.filter === filter);
   });
   renderCalendar();
-  updateCalendarSections();
+  renderCalendarSources();
 }
 
 function normalizePlatform(value) {
@@ -413,79 +616,41 @@ function renderStreaming() {
   });
 }
 
-function updateCalendarSections() {
-  const localView = document.querySelector("#localCalendarView");
-  const embedWrap = document.querySelector("#calendarEmbedWrap");
-  const hasEmbed = embedWrap?.dataset.hasEmbeds === "true";
+function renderCalendarSources() {
+  const line = document.querySelector("#calendarSourceLine");
+  if (!line) return;
 
-  if (embedWrap) {
-    embedWrap.hidden = !(hasEmbed && (state.calendarFilter === "all" || state.calendarFilter === "bts"));
-  }
+  const relevantStatuses = state.calendarStatuses.filter((status) => {
+    return state.calendarFilter === "all" || status.type === state.calendarFilter;
+  });
 
-  if (localView) {
-    localView.hidden = state.calendarFilter === "bts";
-  }
-}
-
-function renderCalendarEmbeds() {
-  const wrap = document.querySelector("#calendarEmbedWrap");
-  const grid = document.querySelector("#calendarEmbeds");
-  if (!wrap || !grid) return;
-
-  const embeds = [
-    {
-      title: "Sede Ica",
-      url: state.config.sedeCalendarEmbedUrl,
-      credit: state.config.sedeCalendarCredit || "Calendario propio de ARMY PERÚ Sede Ica"
-    },
-    {
-      title: state.config.officialCalendarLabel || "BTS oficial",
-      url: state.config.officialCalendarEmbedUrl,
-      credit: state.config.officialCalendarCredit || "Calendario BTS oficial compartido por foreverpurple130613@gmail.com"
-    }
-  ].filter((item) => item.url);
-
-  wrap.dataset.hasEmbeds = embeds.length ? "true" : "false";
-
-  if (!embeds.length) {
-    grid.innerHTML = "";
-    updateCalendarSections();
+  if (!relevantStatuses.length) {
+    line.innerHTML = "";
     return;
   }
 
-  grid.classList.toggle("single", embeds.length === 1);
-  grid.innerHTML = embeds
-    .map((item) => {
-      const isSede = item.title.toLowerCase().includes("sede");
-      const labelClass = isSede ? "sede" : "bts";
-      const title = isSede ? item.title : "BTS oficial";
-      const subtitle = isSede
-        ? "Actividades locales de ARMY PERÚ Sede Ica"
-        : "Calendario mensual sincronizado desde Google Calendar";
-      return `
-        <article class="google-calendar-card ${labelClass}">
-          <div class="google-calendar-head redesigned">
-            <div>
-              <span class="badge ${labelClass}">${title}</span>
-              <h3>${isSede ? "Calendario de la sede" : "Agenda oficial BTS"}</h3>
-              <p>${subtitle}</p>
-            </div>
-            <a class="calendar-open-link" href="${item.url}" target="_blank" rel="noopener">Abrir en Google</a>
-          </div>
-          <div class="calendar-browser-frame">
-            <div class="browser-frame-bar" aria-hidden="true">
-              <span></span><span></span><span></span>
-              <strong>${isSede ? "Sede Ica" : "BTS Official Calendar"}</strong>
-            </div>
-            <iframe class="pretty-google-calendar" title="Calendario ${item.title}" src="${item.url}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-          ${item.credit ? `<p class="calendar-credit">Crédito: ${item.credit}</p>` : ""}
-        </article>
-      `;
-    })
-    .join("");
+  const hasIssue = relevantStatuses.some((status) => status.state !== "connected");
+  const statusHTML = relevantStatuses.map((status) => {
+    const className = status.state === "connected" ? "ok" : "warning";
+    const text = status.state === "connected"
+      ? `${status.label}: ${status.count} evento${status.count === 1 ? "" : "s"}`
+      : `${status.label}: ${status.message}`;
+    return `<span class="source-pill ${className}">${escapeHTML(text)}</span>`;
+  }).join("");
 
-  updateCalendarSections();
+  const credits = state.calendarSources
+    .filter((calendar) => state.calendarFilter === "all" || calendar.type === state.calendarFilter)
+    .map((calendar) => calendar.credit)
+    .filter(Boolean);
+
+  line.innerHTML = `
+    <div class="source-status-row">${statusHTML}</div>
+    <p class="${hasIssue ? "source-help warning" : "source-help"}">
+      ${hasIssue
+        ? "Los eventos se mostrarán aquí cuando la API key esté configurada y los calendarios estén públicos."
+        : `Fuentes: ${credits.map(escapeHTML).join(" · ")}`}
+    </p>
+  `;
 }
 
 function setLinks() {
@@ -570,24 +735,24 @@ function bindUI() {
 }
 
 async function init() {
-  const [config, events, social, streaming] = await Promise.all([
+  const [config, social, streaming] = await Promise.all([
     fetchJSON("data/config.json", FALLBACK_CONFIG),
-    fetchJSON("data/events.json", FALLBACK_EVENTS),
     fetchJSON("data/social-updates.json", FALLBACK_SOCIAL),
     fetchJSON("data/streaming.json", FALLBACK_STREAMING)
   ]);
 
   state.config = { ...FALLBACK_CONFIG, ...config };
-  state.events = Array.isArray(events) ? events : FALLBACK_EVENTS;
+  state.calendarSources = normalizeCalendarSources(state.config);
+  state.events = await loadAllGoogleCalendarEvents();
   state.social = Array.isArray(social) ? social : FALLBACK_SOCIAL;
   state.streaming = Array.isArray(streaming) ? streaming : FALLBACK_STREAMING;
 
   setLinks();
   bindUI();
   renderCalendar();
+  renderCalendarSources();
   renderSocial();
   renderStreaming();
-  renderCalendarEmbeds();
   showRoute(currentRouteFromHash(), { preserveScroll: true });
 }
 

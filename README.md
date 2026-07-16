@@ -2,87 +2,66 @@
 
 Página estática para `https://armyperusedeica.github.io/`.
 
-## Archivos principales
+## Qué cambió en esta versión
 
-- `index.html`: estructura de la página.
-- `styles.css`: diseño visual.
-- `script.js`: calendario, filtros, menú y carga de datos.
-- `assets/logo-ica.png`: logo.
-- `assets/group-photo.png`: imagen principal.
-- `data/events.json`: eventos del calendario.
-- `data/social-updates.json`: publicaciones destacadas.
-- `data/streaming.json`: metas y logros de streaming.
-- `data/config.json`: enlaces generales, Discord, redes y calendarios públicos.
+- El calendario visual de la página ahora puede sincronizar **dos calendarios de Google**:
+  - `Sede Ica`: eventos creados por ARMY Perú Sede Ica.
+  - `BTS oficial`: eventos compartidos por `foreverpurple130613@gmail.com`.
+- Se eliminó el calendario embebido de Google.
+- Los botones del calendario permiten ver:
+  - `Agenda completa`
+  - `Sede Ica`
+  - `BTS oficial`
 
-## Cómo editar eventos
+## Archivo principal para configurar calendarios
 
-Edita `data/events.json`.
+Edita:
 
-Usa:
-
-```json
-"type": "sede"
+```txt
+data/config.json
 ```
 
-para eventos de ARMY PERÚ Sede Ica, y:
+La API key va aquí:
 
 ```json
-"type": "bts"
+"googleCalendarApiKey": "PEGA_AQUI_TU_API_KEY"
 ```
 
-para fechas oficiales de BTS.
+El calendario de la sede ya está agregado con este ID:
 
-## Cómo editar redes
+```txt
+ac1f7aecc7b1d38bcd41ecc85b33f23dab759578e8ca0c87d926ffcab9f74b0c@group.calendar.google.com
+```
 
-Edita `data/social-updates.json` y agrega publicaciones destacadas con estas plataformas:
+El calendario BTS oficial está agregado con este ID:
 
-- `facebook`
-- `twitter`
-- `instagram`
-- `tiktok`
+```txt
+foreverpurple130613@gmail.com
+```
 
-## Cómo editar streaming
+## Requisitos para que los eventos se vean
 
-Edita `data/streaming.json`. El campo `progress` debe ir de 0 a 100.
+1. Activar **Google Calendar API** en Google Cloud.
+2. Crear una **API key**.
+3. Pegar la API key en `data/config.json`.
+4. Hacer públicos ambos calendarios con permiso de ver detalles:
+   - Settings and sharing
+   - Access permissions for events
+   - Make available to public
+   - See all event details
 
-## Cómo cambiar enlaces
+## Subir a GitHub
 
-Edita `data/config.json` para actualizar Discord, Facebook, X/Twitter, Instagram, TikTok y calendarios públicos de Google Calendar.
+Sube el contenido de esta carpeta directamente a la raíz del repositorio:
 
-## Publicación en GitHub Pages
+```txt
+index.html
+styles.css
+script.js
+README.md
+assets/
+data/
+.nojekyll
+```
 
-Sube estos archivos directamente a la raíz del repositorio `armyperusedeica.github.io`. El archivo `index.html` debe quedar visible en la primera pantalla del repositorio, no dentro de una carpeta.
-
-
-## Calendario BTS oficial conectado
-
-El archivo `data/config.json` ya incluye el calendario BTS oficial en `officialCalendarEmbedUrl`.
-
-El enlace usa estos parámetros para mejorar privacidad visual:
-
-- `showTitle=0`: oculta el título/encabezado del calendario.
-- `showCalendars=0`: oculta la lista de calendarios.
-- `showTz=0`: oculta la zona horaria.
-- `showPrint=0`: oculta el botón de impresión.
-- `mode=AGENDA`: muestra una vista de agenda más limpia.
-
-Nota: aunque el nombre visual está oculto, el correo o ID del calendario sigue dentro del código HTML del iframe. Si no quieres que se exponga un correo personal al inspeccionar el código, usa un calendario secundario con ID tipo `group.calendar.google.com` o una cuenta institucional/fanbase.
-
-
-## Crédito del calendario BTS oficial
-
-El texto visible debajo del calendario BTS oficial se controla en `data/config.json` mediante `officialCalendarCredit`. Actualmente acredita: `foreverpurple130613@gmail.com`.
-
-
-## Calendario BTS oficial
-
-El calendario BTS oficial está embebido desde Google Calendar y aparece en la sección **Calendario**. Para que los eventos se vean para todos, el calendario fuente debe estar compartido públicamente con permiso de visualización de detalles.
-
-Crédito mostrado en la web: `Calendario BTS oficial compartido por foreverpurple130613@gmail.com`.
-
-Si deseas cambiar el enlace o el crédito, edita `data/config.json`.
-
-
-## Actualización de diseño
-
-Esta versión muestra el calendario BTS oficial embebido en vista mensual, dentro de un marco visual más limpio. El enlace y el crédito pueden editarse en `data/config.json`.
+No subas la carpeta completa. El archivo `index.html` debe quedar visible en la primera vista del repositorio.

@@ -5,8 +5,25 @@
   "xProfileUrl": "https://x.com/TU_USUARIO",
   "instagramUrl": "https://www.instagram.com/TU_USUARIO/",
   "tiktokUrl": "https://www.tiktok.com/@TU_USUARIO",
-  "sedeCalendarEmbedUrl": "",
-  "officialCalendarEmbedUrl": "https://calendar.google.com/calendar/embed?height=760&wkst=2&ctz=Asia%2FSeoul&showTitle=0&showPrint=0&showTabs=1&showCalendars=0&showTz=0&showNav=1&showDate=1&mode=MONTH&src=foreverpurple130613%40gmail.com&color=%23D81B60",
-  "officialCalendarLabel": "BTS oficial",
-  "officialCalendarCredit": "Calendario BTS oficial compartido por foreverpurple130613@gmail.com"
+  "googleCalendarApiKey": "PEGA_AQUI_TU_API_KEY",
+  "calendars": [
+    {
+      "key": "sede",
+      "type": "sede",
+      "label": "Sede Ica",
+      "calendarId": "ac1f7aecc7b1d38bcd41ecc85b33f23dab759578e8ca0c87d926ffcab9f74b0c@group.calendar.google.com",
+      "timeZone": "America/Lima",
+      "credit": "Calendario creado por ARMY Perú Sede Ica",
+      "sourceUrl": "https://calendar.google.com/calendar/u/3?cid=YWMxZjdhZWNjN2IxZDM4YmNkNDFlY2M4NWIzM2YyM2RhYjc1OTU3OGU4Y2EwYzg3ZDkyNmZmY2FiOWY3NGIwY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
+    },
+    {
+      "key": "bts",
+      "type": "bts",
+      "label": "BTS oficial",
+      "calendarId": "foreverpurple130613@gmail.com",
+      "timeZone": "Asia/Seoul",
+      "credit": "Calendario BTS oficial compartido por foreverpurple130613@gmail.com",
+      "sourceUrl": "https://calendar.google.com/calendar/u/0/newembed?src=foreverpurple130613@gmail.com&ctz=Asia/Seoul"
+    }
+  ]
 }

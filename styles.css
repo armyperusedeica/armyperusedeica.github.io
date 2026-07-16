@@ -552,6 +552,71 @@ main { min-height: calc(100svh - 165px); }
   outline: none;
 }
 
+.calendar-tools {
+  flex-wrap: wrap;
+}
+
+.calendar-source-line {
+  flex: 1 1 100%;
+  display: grid;
+  gap: 8px;
+  margin-top: 2px;
+  padding: 12px 14px;
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: 18px;
+  background: rgba(0,0,0,0.13);
+}
+
+.source-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.source-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 0.74rem;
+  font-weight: 900;
+}
+
+.source-pill.ok {
+  background: rgba(255,255,255,0.10);
+  border: 1px solid rgba(255,255,255,0.14);
+}
+
+.source-pill.ok::before {
+  content: "✓";
+  margin-right: 7px;
+  color: #ffffff;
+}
+
+.source-pill.warning {
+  background: rgba(255, 178, 45, 0.16);
+  border: 1px solid rgba(255, 211, 115, 0.28);
+}
+
+.source-pill.warning::before {
+  content: "!";
+  margin-right: 7px;
+  color: #ffd37a;
+}
+
+.source-help {
+  margin: 0;
+  color: rgba(255,255,255,0.68);
+  font-size: 0.80rem;
+  line-height: 1.45;
+}
+
+.source-help.warning {
+  color: rgba(255, 234, 190, 0.88);
+}
+
 .calendar-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.45fr) minmax(310px, 0.65fr);
@@ -639,6 +704,7 @@ main { min-height: calc(100svh - 165px); }
 
 .calendar-chip.sede { background: rgba(255, 54, 81, 0.86); }
 .calendar-chip.bts { background: rgba(159, 122, 255, 0.88); }
+.calendar-chip.more { background: rgba(255,255,255,0.14); color: rgba(255,255,255,0.84); cursor: default; }
 
 .event-panel { padding: 20px; }
 
@@ -1232,5 +1298,62 @@ main { min-height: calc(100svh - 165px); }
 
   .browser-frame-bar strong {
     font-size: 0.68rem;
+  }
+}
+
+/* Sincronización del calendario BTS sin iframe de Google */
+.sync-status-card {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 18px;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 12% 20%, rgba(141, 92, 246, 0.22), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.035));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.sync-status-card h3 {
+  margin: 10px 0 6px;
+  font-size: clamp(1.1rem, 2vw, 1.55rem);
+}
+
+.sync-status-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.73);
+  line-height: 1.6;
+}
+
+.sync-status-icon {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  color: #fff;
+  font-weight: 1000;
+  background: linear-gradient(135deg, #ff3857, #8d5cf6);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.24);
+}
+
+.sync-status-card.connected .sync-status-icon {
+  background: linear-gradient(135deg, #ff3857, #7d5cff);
+}
+
+.sync-status-card.missing-key .sync-status-icon,
+.sync-status-card.error .sync-status-icon {
+  background: linear-gradient(135deg, #ff3857, #ffb1bd);
+}
+
+@media (max-width: 760px) {
+  .sync-status-card {
+    grid-template-columns: 1fr;
+  }
+
+  .sync-status-card .calendar-open-link {
+    justify-self: start;
   }
 }
