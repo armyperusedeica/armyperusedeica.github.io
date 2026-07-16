@@ -1,0 +1,30 @@
+{
+  "siteName": "ARMY PERÚ Sede Ica",
+  "discordInviteUrl": "",
+  "discordServerId": "",
+  "facebookPageUrl": "https://www.facebook.com/ArmyPeruSedeIca/",
+  "xProfileUrl": "https://x.com/ArmyPeruIca",
+  "instagramUrl": "https://www.instagram.com/armyperu_ica/",
+  "tiktokUrl": "https://www.tiktok.com/@armyperu_ica",
+  "calendarEmbedTimeZone": "America/Lima",
+  "calendars": [
+    {
+      "key": "sede",
+      "type": "sede",
+      "label": "Sede Ica",
+      "calendarId": "ac1f7aecc7b1d38bcd41ecc85b33f23dab759578e8ca0c87d926ffcab9f74b0c@group.calendar.google.com",
+      "timeZone": "America/Lima",
+      "color": "#E91E63",
+      "credit": "Calendario creado por ARMY Perú Sede Ica"
+    },
+    {
+      "key": "bts",
+      "type": "bts",
+      "label": "BTS oficial",
+      "calendarId": "foreverpurple130613@gmail.com",
+      "timeZone": "Asia/Seoul",
+      "color": "#7E57C2",
+      "credit": "Calendario BTS oficial compartido por foreverpurple130613@gmail.com"
+    }
+  ]
+}
