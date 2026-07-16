@@ -1,54 +1,87 @@
-# ARMY PERÚ Sede Ica — GitHub Pages
+# ARMY PERÚ Sede Ica — web GitHub Pages
 
-Página estática para `https://armyperusedeica.github.io/`.
+Esta versión no usa API key. El calendario se muestra con Google Calendar embebido y los botones cambian entre:
 
-## Qué cambió en esta versión
+- Agenda completa: Sede Ica + BTS oficial
+- Sede Ica
+- BTS oficial
 
-- El calendario ya **no pide API key**.
-- Se volvió al calendario mensual de Google embebido, como el diseño que se veía más bonito.
-- El calendario permite alternar entre:
-  - `Agenda completa`: muestra el calendario de la sede + el calendario BTS oficial.
-  - `Sede Ica`: muestra solo el calendario de ARMY Perú Sede Ica.
-  - `BTS oficial`: muestra solo el calendario BTS oficial.
-- Se eliminó el calendario rojo interno que estaba debajo, porque ahora los eventos vienen desde Google Calendar.
+## Archivos principales
 
-## Calendarios conectados
+- `index.html`: estructura de la página.
+- `styles.css`: diseño visual.
+- `script.js`: navegación, filtros y carga de datos.
+- `data/config.json`: enlaces reales, Discord y calendarios.
+- `data/social-updates.json`: publicaciones destacadas manuales.
+- `data/streaming.json`: metas de streaming.
 
-### Sede Ica
+## Configurar enlaces reales
 
-```txt
-ac1f7aecc7b1d38bcd41ecc85b33f23dab759578e8ca0c87d926ffcab9f74b0c@group.calendar.google.com
+Edita `data/config.json` y coloca los enlaces reales:
+
+```json
+"discordInviteUrl": "https://discord.gg/XXXXX",
+"discordServerId": "123456789012345678",
+"facebookPageUrl": "https://www.facebook.com/TU_PAGINA",
+"xProfileUrl": "https://x.com/TU_USUARIO",
+"instagramUrl": "https://www.instagram.com/TU_USUARIO/",
+"tiktokUrl": "https://www.tiktok.com/@TU_USUARIO"
 ```
 
-### BTS oficial
+Si un enlace queda vacío, la web no inventa contenido: muestra el botón como pendiente.
 
-```txt
-foreverpurple130613@gmail.com
+## Agregar publicaciones destacadas
+
+Edita `data/social-updates.json`:
+
+```json
+[
+  {
+    "platform": "facebook",
+    "date": "2026-07-20",
+    "title": "Cupsleeve por aniversario",
+    "text": "Resumen breve de la publicación.",
+    "url": "https://www.facebook.com/..."
+  }
+]
 ```
 
-## Archivo editable
+`platform` puede ser: `facebook`, `twitter`, `instagram` o `tiktok`.
 
-Edita:
+## Agregar metas de streaming
 
-```txt
-data/config.json
+Edita `data/streaming.json`:
+
+```json
+[
+  {
+    "platform": "YouTube",
+    "project": "Meta semanal - MV oficial",
+    "current": "7,200 reproducciones registradas",
+    "target": "10,000 reproducciones",
+    "progress": 72,
+    "status": "Activa",
+    "updated": "2026-07-20",
+    "note": "Reforzar playlist de la tarde.",
+    "url": "https://youtube.com/..."
+  }
+]
 ```
 
-Ahí puedes cambiar:
+## Calendarios
 
-- Enlace de Discord.
-- Enlaces de redes sociales.
-- ID del calendario de la sede.
-- ID del calendario BTS oficial.
-- Créditos visibles debajo del calendario.
-- Zona horaria principal del calendario (`calendarEmbedTimeZone`).
+Los calendarios están en `data/config.json`. Para que se vean en la web, deben estar públicos en Google Calendar:
 
-## Importante
-
-Para que el calendario se vea públicamente en la página, cada calendario debe estar configurado como público en Google Calendar:
-
-```txt
 Settings and sharing → Access permissions for events → Make available to public
-```
 
-Si el calendario no está público, Google mostrará un mensaje de permisos dentro del iframe.
+## Subir a GitHub
+
+Sube directamente estos archivos y carpetas a la raíz del repositorio `armyperusedeica.github.io`:
+
+- `index.html`
+- `styles.css`
+- `script.js`
+- `.nojekyll`
+- `assets/`
+- `data/`
+- `README.md`

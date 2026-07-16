@@ -1,10 +1,11 @@
 {
   "siteName": "ARMY PERÚ Sede Ica",
-  "discordInviteUrl": "https://discord.gg/TU_INVITACION",
-  "facebookPageUrl": "https://www.facebook.com/TU_PAGINA",
-  "xProfileUrl": "https://x.com/TU_USUARIO",
-  "instagramUrl": "https://www.instagram.com/TU_USUARIO/",
-  "tiktokUrl": "https://www.tiktok.com/@TU_USUARIO",
+  "discordInviteUrl": "",
+  "discordServerId": "",
+  "facebookPageUrl": "",
+  "xProfileUrl": "",
+  "instagramUrl": "",
+  "tiktokUrl": "",
   "calendarEmbedTimeZone": "America/Lima",
   "calendars": [
     {
@@ -14,8 +15,7 @@
       "calendarId": "ac1f7aecc7b1d38bcd41ecc85b33f23dab759578e8ca0c87d926ffcab9f74b0c@group.calendar.google.com",
       "timeZone": "America/Lima",
       "color": "#E91E63",
-      "credit": "Calendario creado por ARMY Perú Sede Ica",
-      "sourceUrl": "https://calendar.google.com/calendar/u/3?cid=YWMxZjdhZWNjN2IxZDM4YmNkNDFlY2M4NWIzM2YyM2RhYjc1OTU3OGU4Y2EwYzg3ZDkyNmZmY2FiOWY3NGIwY0Bncm91cC5jYWxlbmRhci5nb29nbGUuY29t"
+      "credit": "Calendario creado por ARMY Perú Sede Ica"
     },
     {
       "key": "bts",
@@ -24,8 +24,7 @@
       "calendarId": "foreverpurple130613@gmail.com",
       "timeZone": "Asia/Seoul",
       "color": "#7E57C2",
-      "credit": "Calendario BTS oficial compartido por foreverpurple130613@gmail.com",
-      "sourceUrl": "https://calendar.google.com/calendar/u/0/newembed?src=foreverpurple130613@gmail.com&ctz=Asia/Seoul"
+      "credit": "Calendario BTS oficial compartido por foreverpurple130613@gmail.com"
     }
   ]
 }

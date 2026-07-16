@@ -4,216 +4,218 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>ARMY PERÚ Sede Ica</title>
-    <meta
-      name="description"
-      content="Página comunitaria de ARMY PERÚ Sede Ica: calendario, redes, streaming y Discord."
-    />
-    <meta name="theme-color" content="#bd0018" />
+    <meta name="description" content="Agenda, redes, campañas de streaming y comunidad de ARMY PERÚ Sede Ica." />
+    <meta name="theme-color" content="#8b0012" />
     <meta property="og:title" content="ARMY PERÚ Sede Ica" />
-    <meta property="og:description" content="Calendario, actualizaciones, streaming y actividades de ARMY PERÚ Sede Ica." />
+    <meta property="og:description" content="Agenda, redes, streaming y comunidad ARMY en Ica." />
     <meta property="og:image" content="assets/logo-ica.png" />
     <link rel="icon" href="assets/logo-ica.png" />
     <link rel="stylesheet" href="styles.css" />
   </head>
 
   <body>
-    <div class="site-bg" aria-hidden="true"></div>
+    <div class="page-noise" aria-hidden="true"></div>
 
-    <div class="site-shell">
-      <header class="topbar" id="top">
-        <a class="brand" href="#inicio" aria-label="Inicio ARMY PERÚ Sede Ica">
-          <img src="assets/logo-ica.png" alt="Logo ARMY PERÚ Sede Ica" />
-          <span>ARMY PERÚ<br /><strong>Sede Ica</strong></span>
-        </a>
-
-        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
-          <span></span><span></span><span></span>
-        </button>
-
-        <nav class="nav" id="mainNav" aria-label="Navegación principal">
-          <a class="nav-link" href="#inicio">Inicio</a>
-
-          <div class="nav-item has-dropdown">
-            <a class="nav-link" href="#calendario">Calendario <span class="chevron">⌄</span></a>
-            <div class="dropdown-menu" aria-label="Opciones de calendario">
-              <a href="#calendario" data-calendar-filter="all">Agenda completa</a>
-              <a href="#calendario" data-calendar-filter="sede">Calendario Sede Ica</a>
-              <a href="#calendario" data-calendar-filter="bts">Calendario BTS oficial</a>
-            </div>
-          </div>
-
-          <div class="nav-item has-dropdown">
-            <a class="nav-link" href="#redes">Redes <span class="chevron">⌄</span></a>
-            <div class="dropdown-menu" aria-label="Opciones de redes">
-              <a href="#redes" data-social-filter="all">Todas las redes</a>
-              <a href="#redes" data-social-filter="facebook">Facebook</a>
-              <a href="#redes" data-social-filter="twitter">X / Twitter</a>
-              <a href="#redes" data-social-filter="instagram">Instagram</a>
-              <a href="#redes" data-social-filter="tiktok">TikTok</a>
-            </div>
-          </div>
-
-          <div class="nav-item has-dropdown">
-            <a class="nav-link" href="#streaming">Streaming <span class="chevron">⌄</span></a>
-            <div class="dropdown-menu" aria-label="Opciones de streaming">
-              <a href="#streaming" data-stream-filter="all">Panel completo</a>
-              <a href="#streaming" data-stream-filter="youtube">YouTube</a>
-              <a href="#streaming" data-stream-filter="spotify">Spotify</a>
-              <a href="#streaming" data-stream-filter="apple music">Apple Music</a>
-            </div>
-          </div>
-
-          <a class="nav-link nav-cta" href="#discord">Discord</a>
-        </nav>
-      </header>
-
-      <main>
-        <section class="view view-home active" id="inicio" aria-labelledby="hero-title">
-          <div class="hero">
-            <div class="hero-copy">
-              <p class="eyebrow">Comunidad ARMY en Ica</p>
-              <h1 id="hero-title">ARMY PERÚ <span>Sede Ica</span></h1>
-              <p class="hero-text">
-                Actividades, calendario, streaming, campañas y actualizaciones reunidas en un solo lugar.
-              </p>
-              <div class="hero-actions">
-                <a class="btn btn-primary" href="#calendario">Ver calendario</a>
-                <a class="btn btn-ghost" id="discordHeroBtn" href="#discord">Unirme a Discord</a>
-              </div>
-            </div>
-
-            <div class="hero-media" aria-label="Imagen destacada">
-              <img src="assets/group-photo.png" alt="Foto grupal destacada" />
-              <div class="hero-logo-card">
-                <img src="assets/logo-ica.png" alt="Logo ARMY PERÚ Sede Ica" />
-              </div>
-            </div>
-
-            <div class="marquee" aria-hidden="true">
-              <div class="marquee-track">
-                <span>ARMY PERÚ SEDE ICA · STREAMING · EVENTOS · COMUNIDAD · BTS ·</span>
-                <span>ARMY PERÚ SEDE ICA · STREAMING · EVENTOS · COMUNIDAD · BTS ·</span>
-                <span>ARMY PERÚ SEDE ICA · STREAMING · EVENTOS · COMUNIDAD · BTS ·</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="view page-view" id="calendario" aria-labelledby="calendar-title">
-          <div class="page-hero slim">
-            <p class="eyebrow">Agenda</p>
-            <h2 id="calendar-title">Calendario de actividades</h2>
-            <p>
-              Revisa los eventos de ARMY Perú Sede Ica y los eventos BTS oficiales en un calendario mensual conectado directamente a Google Calendar.
-            </p>
-          </div>
-
-          <div class="calendar-tools panel-card embed-tools">
-            <div class="calendar-copy">
-              <p class="eyebrow">Sincronizado</p>
-              <h3 id="calendarViewTitle">Agenda completa</h3>
-              <p id="calendarViewDescription">Se muestran juntos los eventos de la sede y los eventos BTS oficiales.</p>
-            </div>
-            <div class="filter-group" aria-label="Filtrar calendario">
-              <button class="filter-btn active" data-filter="all">Agenda completa</button>
-              <button class="filter-btn" data-filter="sede">Sede Ica</button>
-              <button class="filter-btn" data-filter="bts">BTS oficial</button>
-            </div>
-            <div class="calendar-source-line" id="calendarSourceLine" aria-live="polite"></div>
-          </div>
-
-          <div class="google-calendar-shell panel-card">
-            <div class="browser-bar" aria-hidden="true">
-              <span class="window-dot red"></span>
-              <span class="window-dot yellow"></span>
-              <span class="window-dot green"></span>
-              <strong id="calendarBrowserTitle">Agenda completa</strong>
-              <a id="openCalendarLink" class="open-calendar-link" href="#" target="_blank" rel="noopener">Abrir en Google Calendar</a>
-            </div>
-            <div class="google-calendar-frame-wrap">
-              <iframe
-                id="googleCalendarFrame"
-                title="Calendario de actividades ARMY Perú Sede Ica"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </div>
-            <p class="calendar-credit" id="calendarCredit"></p>
-          </div>
-
-        </section>
-
-        <section class="view page-view" id="redes" aria-labelledby="social-title">
-          <div class="page-hero slim">
-            <p class="eyebrow">Actualizaciones</p>
-            <h2 id="social-title">Redes oficiales de la sede</h2>
-            <p>
-              Publicaciones destacadas de Facebook, X/Twitter, Instagram y TikTok en un panel limpio para que la comunidad no se pierda nada.
-            </p>
-          </div>
-
-          <div class="filter-strip panel-card" aria-label="Filtrar redes">
-            <button class="filter-btn social-filter active" data-social-button="all">Todas</button>
-            <button class="filter-btn social-filter" data-social-button="facebook">Facebook</button>
-            <button class="filter-btn social-filter" data-social-button="twitter">X/Twitter</button>
-            <button class="filter-btn social-filter" data-social-button="instagram">Instagram</button>
-            <button class="filter-btn social-filter" data-social-button="tiktok">TikTok</button>
-          </div>
-
-          <div class="social-grid" id="socialGrid"></div>
-        </section>
-
-        <section class="view page-view" id="streaming" aria-labelledby="streaming-title">
-          <div class="page-hero slim">
-            <p class="eyebrow">Base Ica</p>
-            <h2 id="streaming-title">Logros y metas de streaming</h2>
-            <p>
-              Control visual para campañas de YouTube, Spotify y Apple Music. Ideal para metas semanales, logros de la base y llamados de apoyo.
-            </p>
-          </div>
-
-          <div class="filter-strip panel-card" aria-label="Filtrar plataformas de streaming">
-            <button class="filter-btn stream-filter active" data-stream-button="all">Todo</button>
-            <button class="filter-btn stream-filter" data-stream-button="youtube">YouTube</button>
-            <button class="filter-btn stream-filter" data-stream-button="spotify">Spotify</button>
-            <button class="filter-btn stream-filter" data-stream-button="apple music">Apple Music</button>
-          </div>
-
-          <div class="streaming-grid" id="streamingGrid"></div>
-        </section>
-
-        <section class="view page-view" id="discord" aria-labelledby="discord-title">
-          <div class="discord-layout">
-            <div class="discord-card panel-card">
-              <p class="eyebrow">Comunidad</p>
-              <h2 id="discord-title">Únete a nuestro Discord</h2>
-              <p>
-                Coordina actividades, campañas de streaming, votaciones, proyectos, reuniones y dinámicas con la comunidad ARMY de Ica.
-              </p>
-              <div class="discord-actions">
-                <a class="btn btn-primary" id="discordBtn" href="#" target="_blank" rel="noopener">Entrar al canal</a>
-                <a class="btn btn-ghost" href="#calendario">Ver próximas actividades</a>
-              </div>
-            </div>
-
-            <div class="discord-side panel-card">
-              <img src="assets/logo-ica.png" alt="Logo ARMY PERÚ Sede Ica" />
-              <h3>ARMY PERÚ Sede Ica</h3>
-              <p>Un espacio para organizar campañas, compartir avisos y mantener a la sede conectada.</p>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <footer class="footer">
+    <header class="site-header" id="top">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
         <img src="assets/logo-ica.png" alt="Logo ARMY PERÚ Sede Ica" />
-        <p>
-          ARMY PERÚ Sede Ica · Página comunitaria. Para información oficial, revisar siempre los canales oficiales correspondientes.
-        </p>
-        <a href="#inicio">Volver al inicio ↑</a>
-      </footer>
-    </div>
+        <span>ARMY PERÚ<br /><strong>SEDE ICA</strong></span>
+      </a>
 
-    <script src="script.js" defer></script>
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navegación principal">
+        <a href="#inicio" class="nav-link">Inicio</a>
+
+        <div class="nav-item">
+          <a href="#calendario" class="nav-link">Calendario <span>⌄</span></a>
+          <div class="dropdown">
+            <a href="#calendario" data-calendar-filter="all">Agenda completa</a>
+            <a href="#calendario" data-calendar-filter="sede">Sede Ica</a>
+            <a href="#calendario" data-calendar-filter="bts">BTS oficial</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="#redes" class="nav-link">Redes <span>⌄</span></a>
+          <div class="dropdown">
+            <a href="#redes" data-social-filter="all">Todas</a>
+            <a href="#redes" data-social-filter="facebook">Facebook</a>
+            <a href="#redes" data-social-filter="twitter">X / Twitter</a>
+            <a href="#redes" data-social-filter="instagram">Instagram</a>
+            <a href="#redes" data-social-filter="tiktok">TikTok</a>
+          </div>
+        </div>
+
+        <div class="nav-item">
+          <a href="#streaming" class="nav-link">Streaming <span>⌄</span></a>
+          <div class="dropdown">
+            <a href="#streaming" data-stream-filter="all">Todo</a>
+            <a href="#streaming" data-stream-filter="youtube">YouTube</a>
+            <a href="#streaming" data-stream-filter="spotify">Spotify</a>
+            <a href="#streaming" data-stream-filter="apple music">Apple Music</a>
+          </div>
+        </div>
+
+        <a href="#discord" class="nav-link nav-discord">Discord</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      <section class="view home-view active" id="inicio" aria-labelledby="heroTitle">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <p class="kicker">Comunidad ARMY en Ica</p>
+            <h1 id="heroTitle">ARMY PERÚ <span>SEDE ICA</span></h1>
+            <p class="hero-text">
+              Agenda de actividades, campañas de streaming y avisos importantes de la sede, reunidos en un solo espacio.
+            </p>
+            <div class="hero-actions">
+              <a class="btn primary" href="#calendario">Ver calendario</a>
+              <a class="btn secondary" href="#redes">Últimas redes</a>
+            </div>
+          </div>
+
+          <figure class="hero-image">
+            <img src="assets/group-photo.png" alt="BTS" />
+            <figcaption>
+              <img src="assets/logo-ica.png" alt="" aria-hidden="true" />
+              <span>APOBANGPO</span>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="quick-grid" aria-label="Accesos rápidos">
+          <a class="quick-card" href="#calendario">
+            <small>01</small>
+            <strong>Calendario</strong>
+            <span>Eventos de la sede + agenda BTS oficial.</span>
+          </a>
+          <a class="quick-card" href="#redes">
+            <small>02</small>
+            <strong>Redes</strong>
+            <span>Accesos y publicaciones destacadas.</span>
+          </a>
+          <a class="quick-card" href="#streaming">
+            <small>03</small>
+            <strong>Streaming</strong>
+            <span>Metas, avances y campañas activas.</span>
+          </a>
+          <a class="quick-card" href="#discord">
+            <small>04</small>
+            <strong>Discord</strong>
+            <span>Canal para coordinación de la comunidad.</span>
+          </a>
+        </div>
+
+        <div class="ticker" aria-hidden="true">
+          <div class="ticker-track">
+            <span>ARMY PERÚ SEDE ICA</span><span>EVENTOS</span><span>STREAMING</span><span>COMUNIDAD</span><span>BTS</span>
+            <span>ARMY PERÚ SEDE ICA</span><span>EVENTOS</span><span>STREAMING</span><span>COMUNIDAD</span><span>BTS</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="view page-view" id="calendario" aria-labelledby="calendarTitle">
+        <div class="section-heading">
+          <p class="kicker">Agenda sincronizada</p>
+          <h2 id="calendarTitle">Calendario de actividades</h2>
+          <p>Filtra los eventos de ARMY Perú Sede Ica, los eventos BTS oficiales o ambos calendarios a la vez.</p>
+        </div>
+
+        <div class="toolbar-card">
+          <div>
+            <strong id="calendarViewTitle">Agenda completa</strong>
+            <span id="calendarViewDescription">Sede Ica + BTS oficial</span>
+          </div>
+          <div class="segmented" role="group" aria-label="Filtrar calendario">
+            <button class="active" data-calendar-button="all">Agenda completa</button>
+            <button data-calendar-button="sede">Sede Ica</button>
+            <button data-calendar-button="bts">BTS oficial</button>
+          </div>
+        </div>
+
+        <div class="calendar-card">
+          <div class="calendar-topline">
+            <div class="window-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+            <strong id="calendarFrameLabel">Agenda completa</strong>
+            <a id="calendarOpenLink" href="#" target="_blank" rel="noopener">Abrir calendario</a>
+          </div>
+          <div class="calendar-frame-wrap">
+            <iframe id="googleCalendarFrame" title="Calendario ARMY Perú Sede Ica" loading="lazy"></iframe>
+          </div>
+          <p class="credit-line" id="calendarCredit"></p>
+        </div>
+      </section>
+
+      <section class="view page-view" id="redes" aria-labelledby="socialTitle">
+        <div class="section-heading">
+          <p class="kicker">Actualizaciones</p>
+          <h2 id="socialTitle">Redes de la sede</h2>
+          <p>Accesos directos y publicaciones destacadas. Las tarjetas solo muestran información real que ustedes agreguen.</p>
+        </div>
+
+        <div class="toolbar-card compact">
+          <div class="segmented" role="group" aria-label="Filtrar redes">
+            <button class="active" data-social-button="all">Todas</button>
+            <button data-social-button="facebook">Facebook</button>
+            <button data-social-button="twitter">X/Twitter</button>
+            <button data-social-button="instagram">Instagram</button>
+            <button data-social-button="tiktok">TikTok</button>
+          </div>
+        </div>
+
+        <div class="platform-grid" id="platformGrid"></div>
+        <div class="embed-grid" id="socialEmbedGrid"></div>
+        <div class="updates-grid" id="socialUpdatesGrid"></div>
+      </section>
+
+      <section class="view page-view" id="streaming" aria-labelledby="streamingTitle">
+        <div class="section-heading">
+          <p class="kicker">Campañas</p>
+          <h2 id="streamingTitle">Streaming de la base Ica</h2>
+          <p>Panel para metas activas, avances semanales y enlaces de apoyo.</p>
+        </div>
+
+        <div class="toolbar-card compact">
+          <div class="segmented" role="group" aria-label="Filtrar streaming">
+            <button class="active" data-stream-button="all">Todo</button>
+            <button data-stream-button="youtube">YouTube</button>
+            <button data-stream-button="spotify">Spotify</button>
+            <button data-stream-button="apple music">Apple Music</button>
+          </div>
+        </div>
+
+        <div class="stream-grid" id="streamingGrid"></div>
+      </section>
+
+      <section class="view page-view" id="discord" aria-labelledby="discordTitle">
+        <div class="discord-layout">
+          <div class="discord-main card">
+            <p class="kicker">Comunidad</p>
+            <h2 id="discordTitle">Discord de ARMY Perú Sede Ica</h2>
+            <p>Espacio para coordinar campañas, reuniones, votaciones, proyectos y actividades de la sede.</p>
+            <div class="hero-actions">
+              <a class="btn primary" id="discordInviteButton" href="#" target="_blank" rel="noopener">Entrar a Discord</a>
+              <a class="btn secondary" href="#calendario">Ver agenda</a>
+            </div>
+          </div>
+
+          <aside class="discord-widget card" id="discordWidgetCard">
+            <h3>Estado del servidor</h3>
+            <div id="discordWidgetContent" class="empty-box"></div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>ARMY PERÚ Sede Ica</span>
+      <a href="#top">Volver arriba</a>
+    </footer>
+
+    <script src="script.js"></script>
   </body>
 </html>
