@@ -104,15 +104,15 @@
             <p class="eyebrow">Agenda</p>
             <h2 id="calendar-title">Calendario de actividades</h2>
             <p>
-              Revisa aquí los eventos de la sede y los eventos BTS oficiales sincronizados desde Google Calendar, mostrados en nuestro propio calendario visual.
+              Revisa los eventos de ARMY Perú Sede Ica y los eventos BTS oficiales en un calendario mensual conectado directamente a Google Calendar.
             </p>
           </div>
 
-          <div class="calendar-tools panel-card">
-            <div class="calendar-nav">
-              <button class="icon-btn" id="prevMonth" aria-label="Mes anterior">‹</button>
-              <h3 id="currentMonth">Mes</h3>
-              <button class="icon-btn" id="nextMonth" aria-label="Mes siguiente">›</button>
+          <div class="calendar-tools panel-card embed-tools">
+            <div class="calendar-copy">
+              <p class="eyebrow">Sincronizado</p>
+              <h3 id="calendarViewTitle">Agenda completa</h3>
+              <p id="calendarViewDescription">Se muestran juntos los eventos de la sede y los eventos BTS oficiales.</p>
             </div>
             <div class="filter-group" aria-label="Filtrar calendario">
               <button class="filter-btn active" data-filter="all">Agenda completa</button>
@@ -122,29 +122,23 @@
             <div class="calendar-source-line" id="calendarSourceLine" aria-live="polite"></div>
           </div>
 
-          <div class="local-calendar-view" id="localCalendarView">
-            <div class="calendar-layout">
-              <div class="calendar-card panel-card">
-                <div class="calendar-weekdays" aria-hidden="true">
-                  <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
-                </div>
-                <div class="calendar-grid" id="calendarGrid"></div>
-              </div>
-
-              <aside class="event-panel panel-card" aria-labelledby="event-panel-title">
-                <div class="panel-topline">
-                  <div>
-                    <p class="eyebrow">Próximamente</p>
-                    <h3 id="event-panel-title">Eventos de la sede</h3>
-                  </div>
-                  <div class="legend">
-                    <span><i class="dot dot-sede"></i>Sede</span>
-                    <span><i class="dot dot-bts"></i>BTS</span>
-                  </div>
-                </div>
-                <div id="eventList" class="event-list"></div>
-              </aside>
+          <div class="google-calendar-shell panel-card">
+            <div class="browser-bar" aria-hidden="true">
+              <span class="window-dot red"></span>
+              <span class="window-dot yellow"></span>
+              <span class="window-dot green"></span>
+              <strong id="calendarBrowserTitle">Agenda completa</strong>
+              <a id="openCalendarLink" class="open-calendar-link" href="#" target="_blank" rel="noopener">Abrir en Google Calendar</a>
             </div>
+            <div class="google-calendar-frame-wrap">
+              <iframe
+                id="googleCalendarFrame"
+                title="Calendario de actividades ARMY Perú Sede Ica"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <p class="calendar-credit" id="calendarCredit"></p>
           </div>
 
         </section>

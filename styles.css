@@ -1357,3 +1357,131 @@ main { min-height: calc(100svh - 165px); }
     justify-self: start;
   }
 }
+
+/* Versión sin API key: calendarios Google embebidos con filtros */
+.embed-tools {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.calendar-copy h3 {
+  margin: 4px 0 6px;
+  font-size: clamp(1.3rem, 2vw, 2rem);
+  letter-spacing: -0.045em;
+}
+
+.calendar-copy p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.embed-tools .calendar-source-line {
+  grid-column: 1 / -1;
+}
+
+.google-calendar-shell {
+  overflow: hidden;
+  padding: 0;
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(255, 66, 94, 0.22), transparent 28%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.045)),
+    rgba(35, 0, 8, 0.58);
+  box-shadow: var(--shadow);
+}
+
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 0 16px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.11);
+  background: linear-gradient(180deg, #fff, #eef1f6);
+}
+
+.window-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  display: inline-block;
+  flex: 0 0 auto;
+}
+
+.window-dot.red { background: #ff5f57; }
+.window-dot.yellow { background: #ffbd2e; }
+.window-dot.green { background: #28c840; }
+
+.browser-bar strong {
+  margin-left: 8px;
+  color: #2a2d35;
+  font-size: 0.82rem;
+  font-weight: 950;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.open-calendar-link {
+  margin-left: auto;
+  color: #9d0018;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.open-calendar-link:hover,
+.open-calendar-link:focus-visible {
+  text-decoration: underline;
+  outline: none;
+}
+
+.google-calendar-frame-wrap {
+  margin: 0;
+  padding: 12px;
+  background: #f5f7fb;
+}
+
+.google-calendar-frame-wrap iframe {
+  display: block;
+  width: 100%;
+  min-height: 760px;
+  border: 0;
+  border-radius: 20px;
+  background: #fff;
+}
+
+.google-calendar-shell .calendar-credit {
+  display: block;
+  margin: 0;
+  padding: 14px 18px 18px;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.10);
+  color: rgba(255, 248, 248, 0.76);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
+.source-status-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 860px) {
+  .embed-tools { grid-template-columns: 1fr; }
+  .filter-group { justify-content: flex-start; }
+  .browser-bar { flex-wrap: wrap; min-height: 58px; padding-block: 8px; }
+  .open-calendar-link { width: 100%; margin-left: 0; }
+  .google-calendar-frame-wrap iframe { min-height: 680px; }
+}
+
+@media (max-width: 560px) {
+  .google-calendar-frame-wrap { padding: 8px; }
+  .google-calendar-frame-wrap iframe { min-height: 620px; border-radius: 14px; }
+}
