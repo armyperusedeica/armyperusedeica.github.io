@@ -37,8 +37,8 @@
             <a class="nav-link" href="#calendario">Calendario <span class="chevron">⌄</span></a>
             <div class="dropdown-menu" aria-label="Opciones de calendario">
               <a href="#calendario" data-calendar-filter="all">Agenda completa</a>
-              <a href="#calendario" data-calendar-filter="sede">Eventos Sede Ica</a>
-              <a href="#calendario" data-calendar-filter="bts">BTS oficial</a>
+              <a href="#calendario" data-calendar-filter="sede">Calendario Sede Ica</a>
+              <a href="#calendario" data-calendar-filter="bts">Calendario BTS oficial</a>
             </div>
           </div>
 
@@ -116,7 +116,7 @@
               </div>
               <span class="sync-pill">Google Calendar</span>
             </div>
-            <p class="muted-copy">Se actualiza automáticamente desde el calendario conectado. Debajo del calendario se muestra el crédito correspondiente a la fuente compartida.</p>
+            <p class="muted-copy">Este calendario se muestra directamente desde Google Calendar, por eso se actualiza solo cuando cambie la fuente original. Si no carga eventos, el calendario debe estar configurado como público.</p>
             <div class="embed-grid" id="calendarEmbeds"></div>
           </div>
 
@@ -126,34 +126,36 @@
               <h3 id="currentMonth">Mes</h3>
               <button class="icon-btn" id="nextMonth" aria-label="Mes siguiente">›</button>
             </div>
-            <div class="filter-group" aria-label="Filtrar eventos">
-              <button class="filter-btn active" data-filter="all">Todos</button>
+            <div class="filter-group" aria-label="Filtrar calendario">
+              <button class="filter-btn active" data-filter="all">Agenda completa</button>
               <button class="filter-btn" data-filter="sede">Sede Ica</button>
               <button class="filter-btn" data-filter="bts">BTS oficial</button>
             </div>
           </div>
 
-          <div class="calendar-layout">
-            <div class="calendar-card panel-card">
-              <div class="calendar-weekdays" aria-hidden="true">
-                <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+          <div class="local-calendar-view" id="localCalendarView">
+            <div class="calendar-layout">
+              <div class="calendar-card panel-card">
+                <div class="calendar-weekdays" aria-hidden="true">
+                  <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+                </div>
+                <div class="calendar-grid" id="calendarGrid"></div>
               </div>
-              <div class="calendar-grid" id="calendarGrid"></div>
-            </div>
 
-            <aside class="event-panel panel-card" aria-labelledby="event-panel-title">
-              <div class="panel-topline">
-                <div>
-                  <p class="eyebrow">Próximamente</p>
-                  <h3 id="event-panel-title">Eventos del mes</h3>
+              <aside class="event-panel panel-card" aria-labelledby="event-panel-title">
+                <div class="panel-topline">
+                  <div>
+                    <p class="eyebrow">Próximamente</p>
+                    <h3 id="event-panel-title">Eventos de la sede</h3>
+                  </div>
+                  <div class="legend">
+                    <span><i class="dot dot-sede"></i>Sede</span>
+                    <span><i class="dot dot-bts"></i>BTS</span>
+                  </div>
                 </div>
-                <div class="legend">
-                  <span><i class="dot dot-sede"></i>Sede</span>
-                  <span><i class="dot dot-bts"></i>BTS</span>
-                </div>
-              </div>
-              <div id="eventList" class="event-list"></div>
-            </aside>
+                <div id="eventList" class="event-list"></div>
+              </aside>
+            </div>
           </div>
 
         </section>

@@ -28,15 +28,5 @@
     "location": "Ica",
     "description": "Actividad local de integración. Cambiar lugar y detalles cuando esté confirmado.",
     "link": ""
-  },
-  {
-    "title": "Fecha oficial BTS — actualizar",
-    "date": "2026-07-18",
-    "startTime": "",
-    "endTime": "",
-    "type": "bts",
-    "location": "Canales oficiales",
-    "description": "Ejemplo de evento oficial. Reemplazar por una fecha real o conectarlo a un calendario público.",
-    "link": ""
   }
 ]

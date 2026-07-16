@@ -6,7 +6,7 @@ const FALLBACK_CONFIG = {
   instagramUrl: "https://www.instagram.com/TU_USUARIO/",
   tiktokUrl: "https://www.tiktok.com/@TU_USUARIO",
   sedeCalendarEmbedUrl: "",
-  officialCalendarEmbedUrl: "",
+  officialCalendarEmbedUrl: "https://calendar.google.com/calendar/embed?height=620&wkst=2&ctz=Asia%2FSeoul&showTitle=0&showPrint=0&showTabs=1&showCalendars=0&showTz=1&mode=AGENDA&src=foreverpurple130613%40gmail.com&color=%237955FF",
   officialCalendarLabel: "BTS oficial",
   officialCalendarCredit: "Calendario BTS oficial compartido por foreverpurple130613@gmail.com"
 };
@@ -314,6 +314,7 @@ function setCalendarFilter(filter) {
     button.classList.toggle("active", button.dataset.filter === filter);
   });
   renderCalendar();
+  updateCalendarSections();
 }
 
 function normalizePlatform(value) {
@@ -422,6 +423,20 @@ function renderStreaming() {
   });
 }
 
+function updateCalendarSections() {
+  const localView = document.querySelector("#localCalendarView");
+  const embedWrap = document.querySelector("#calendarEmbedWrap");
+  const hasEmbed = embedWrap?.dataset.hasEmbeds === "true";
+
+  if (embedWrap) {
+    embedWrap.hidden = !(hasEmbed && (state.calendarFilter === "all" || state.calendarFilter === "bts"));
+  }
+
+  if (localView) {
+    localView.hidden = state.calendarFilter === "bts";
+  }
+}
+
 function renderCalendarEmbeds() {
   const wrap = document.querySelector("#calendarEmbedWrap");
   const grid = document.querySelector("#calendarEmbeds");
@@ -440,12 +455,14 @@ function renderCalendarEmbeds() {
     }
   ].filter((item) => item.url);
 
+  wrap.dataset.hasEmbeds = embeds.length ? "true" : "false";
+
   if (!embeds.length) {
-    wrap.hidden = true;
+    grid.innerHTML = "";
+    updateCalendarSections();
     return;
   }
 
-  wrap.hidden = false;
   grid.classList.toggle("single", embeds.length === 1);
   grid.innerHTML = embeds
     .map((item) => `
@@ -459,6 +476,8 @@ function renderCalendarEmbeds() {
       </article>
     `)
     .join("");
+
+  updateCalendarSections();
 }
 
 function setLinks() {

@@ -72,3 +72,12 @@ Nota: aunque el nombre visual está oculto, el correo o ID del calendario sigue 
 ## Crédito del calendario BTS oficial
 
 El texto visible debajo del calendario BTS oficial se controla en `data/config.json` mediante `officialCalendarCredit`. Actualmente acredita: `foreverpurple130613@gmail.com`.
+
+
+## Calendario BTS oficial
+
+El calendario BTS oficial está embebido desde Google Calendar y aparece en la sección **Calendario**. Para que los eventos se vean para todos, el calendario fuente debe estar compartido públicamente con permiso de visualización de detalles.
+
+Crédito mostrado en la web: `Calendario BTS oficial compartido por foreverpurple130613@gmail.com`.
+
+Si deseas cambiar el enlace o el crédito, edita `data/config.json`.
