@@ -81,3 +81,8 @@ El calendario BTS oficial está embebido desde Google Calendar y aparece en la s
 Crédito mostrado en la web: `Calendario BTS oficial compartido por foreverpurple130613@gmail.com`.
 
 Si deseas cambiar el enlace o el crédito, edita `data/config.json`.
+
+
+## Actualización de diseño
+
+Esta versión muestra el calendario BTS oficial embebido en vista mensual, dentro de un marco visual más limpio. El enlace y el crédito pueden editarse en `data/config.json`.

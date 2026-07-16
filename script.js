@@ -6,7 +6,7 @@ const FALLBACK_CONFIG = {
   instagramUrl: "https://www.instagram.com/TU_USUARIO/",
   tiktokUrl: "https://www.tiktok.com/@TU_USUARIO",
   sedeCalendarEmbedUrl: "",
-  officialCalendarEmbedUrl: "https://calendar.google.com/calendar/embed?height=620&wkst=2&ctz=Asia%2FSeoul&showTitle=0&showPrint=0&showTabs=1&showCalendars=0&showTz=1&mode=AGENDA&src=foreverpurple130613%40gmail.com&color=%237955FF",
+  officialCalendarEmbedUrl: "https://calendar.google.com/calendar/embed?height=760&wkst=2&ctz=Asia%2FSeoul&showTitle=0&showPrint=0&showTabs=1&showCalendars=0&showTz=0&showNav=1&showDate=1&mode=MONTH&src=foreverpurple130613%40gmail.com&color=%23D81B60",
   officialCalendarLabel: "BTS oficial",
   officialCalendarCredit: "Calendario BTS oficial compartido por foreverpurple130613@gmail.com"
 };
@@ -30,16 +30,6 @@ const FALLBACK_EVENTS = [
     type: "sede",
     location: "Discord",
     description: "Sesión comunitaria para apoyar las metas de la base Ica.",
-    link: ""
-  },
-  {
-    title: "Fecha oficial BTS — actualizar",
-    date: "2026-07-18",
-    startTime: "",
-    endTime: "",
-    type: "bts",
-    location: "Canales oficiales",
-    description: "Ejemplo de evento oficial. Reemplazar por una fecha real o conectarlo a un calendario público.",
     link: ""
   }
 ];
@@ -465,16 +455,34 @@ function renderCalendarEmbeds() {
 
   grid.classList.toggle("single", embeds.length === 1);
   grid.innerHTML = embeds
-    .map((item) => `
-      <article class="google-calendar-card">
-        <div class="google-calendar-head">
-          <span class="badge ${item.title.toLowerCase().includes("sede") ? "sede" : "bts"}">${item.title}</span>
-          <span class="muted-mini">Actualización automática</span>
-        </div>
-        <iframe title="Calendario ${item.title}" src="${item.url}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        ${item.credit ? `<p class="calendar-credit">Crédito: ${item.credit}</p>` : ""}
-      </article>
-    `)
+    .map((item) => {
+      const isSede = item.title.toLowerCase().includes("sede");
+      const labelClass = isSede ? "sede" : "bts";
+      const title = isSede ? item.title : "BTS oficial";
+      const subtitle = isSede
+        ? "Actividades locales de ARMY PERÚ Sede Ica"
+        : "Calendario mensual sincronizado desde Google Calendar";
+      return `
+        <article class="google-calendar-card ${labelClass}">
+          <div class="google-calendar-head redesigned">
+            <div>
+              <span class="badge ${labelClass}">${title}</span>
+              <h3>${isSede ? "Calendario de la sede" : "Agenda oficial BTS"}</h3>
+              <p>${subtitle}</p>
+            </div>
+            <a class="calendar-open-link" href="${item.url}" target="_blank" rel="noopener">Abrir en Google</a>
+          </div>
+          <div class="calendar-browser-frame">
+            <div class="browser-frame-bar" aria-hidden="true">
+              <span></span><span></span><span></span>
+              <strong>${isSede ? "Sede Ica" : "BTS Official Calendar"}</strong>
+            </div>
+            <iframe class="pretty-google-calendar" title="Calendario ${item.title}" src="${item.url}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+          ${item.credit ? `<p class="calendar-credit">Crédito: ${item.credit}</p>` : ""}
+        </article>
+      `;
+    })
     .join("");
 
   updateCalendarSections();
