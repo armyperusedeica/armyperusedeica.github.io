@@ -2,10 +2,10 @@
   "siteName": "ARMY PERÚ Sede Ica",
   "discordInviteUrl": "",
   "discordServerId": "",
-  "facebookPageUrl": "",
-  "xProfileUrl": "",
-  "instagramUrl": "",
-  "tiktokUrl": "",
+  "facebookPageUrl": "https://www.facebook.com/ArmyPeruSedeIca/",
+  "xProfileUrl": "https://x.com/ArmyPeruIca",
+  "instagramUrl": "https://www.instagram.com/armyperu_ica/",
+  "tiktokUrl": "https://www.tiktok.com/@armyperu_ica",
   "calendarEmbedTimeZone": "America/Lima",
   "calendars": [
     {
