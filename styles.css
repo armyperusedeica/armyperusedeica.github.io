@@ -551,3 +551,25 @@ button, input, select { font: inherit; }
   text-decoration: underline;
   font-weight: 800;
 }
+
+/* Automatic post-link embeds */
+.post-embed iframe {
+  width: 100%;
+  max-width: 500px;
+  border: 0;
+  border-radius: 14px;
+  background: white;
+}
+.x-post {
+  background: rgba(0,0,0,0.20);
+  padding: 8px;
+}
+.facebook-post {
+  background: #ffffff;
+  padding: 8px;
+}
+.empty-box.small {
+  margin-top: 14px;
+  padding: 14px;
+  font-size: 0.92rem;
+}

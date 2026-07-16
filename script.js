@@ -230,9 +230,8 @@ function renderSocialEmbeds() {
     `);
   }
 
-  if ((state.socialFilter === "all" || state.socialFilter === "instagram") && instagramUrl) {
-    cards.push(`<section class="embed-card"><h3>Instagram</h3><div class="empty-box"><strong>Instagram conectado.</strong><br>Por privacidad y permisos de Meta, el perfil completo no puede mostrarse como feed automático en una web estática. Abre el perfil desde el botón superior o agrega enlaces de publicaciones/reels en <strong>data/social-updates.json</strong> para que se incrusten aquí.</div></section>`);
-  }
+  // Instagram se muestra mediante enlaces de posts/reels en data/social-updates.json.
+  // No se crea un feed de perfil porque Meta no permite hacerlo de forma estable en una web estática.
 
   if ((state.socialFilter === "all" || state.socialFilter === "tiktok") && tiktokUrl) {
     const user = tiktokUrl.split("/@")[1]?.replace(/\/$/, "") || "";
@@ -265,38 +264,57 @@ function renderSocialEmbeds() {
   if (window.instgrm?.Embeds?.process) window.instgrm.Embeds.process();
 }
 
+function normalizeSocialUpdate(item, index) {
+  const raw = typeof item === "string" ? { url: item } : (item || {});
+  const url = validUrl(raw.url || raw.link || raw.href);
+  const platform = normalizePlatform(raw.platform || detectPlatformFromUrl(url));
+  if (!url || !platform) return null;
+  const platformLabel = platformLabelFromKey(platform);
+  return {
+    id: raw.id || `${platform}-${index}`,
+    platform,
+    date: raw.date || raw.updated || "",
+    title: raw.title || `${platformLabel} · publicación reciente`,
+    text: raw.text || raw.caption || `Actualización enlazada desde ${platformLabel}.`,
+    url
+  };
+}
+
 function renderSocialUpdates() {
   const grid = document.querySelector("#socialUpdatesGrid");
   if (!grid) return;
 
-  const items = state.socialUpdates
-    .filter((item) => item && item.title)
-    .filter((item) => state.socialFilter === "all" || String(item.platform || "").toLowerCase() === state.socialFilter);
+  const items = (Array.isArray(state.socialUpdates) ? state.socialUpdates : [])
+    .map(normalizeSocialUpdate)
+    .filter(Boolean)
+    .filter((item) => state.socialFilter === "all" || item.platform === state.socialFilter);
 
   if (!items.length) {
-    grid.innerHTML = `<div class="empty-box">No hay publicaciones destacadas registradas todavía. Cuando agreguen enlaces reales en <strong>data/social-updates.json</strong>, aparecerán aquí.</div>`;
+    grid.innerHTML = `<div class="empty-box"><strong>No hay publicaciones enlazadas todavía.</strong><br>Agrega solo los links en <strong>data/social-updates.json</strong>. La página detectará si son de Instagram, X/Twitter, Facebook o TikTok y los incrustará automáticamente.</div>`;
     grid.style.display = "block";
     return;
   }
 
   grid.style.display = "grid";
   grid.innerHTML = items.map((item) => {
-    const platform = String(item.platform || "red").toUpperCase();
+    const platform = platformLabelFromKey(item.platform).toUpperCase();
     const url = validUrl(item.url);
     const inlineEmbed = renderInlinePostEmbed(item);
     return `
       <article class="social-card ${inlineEmbed ? "with-embed" : ""}">
         <span class="platform-badge">${escapeHTML(platform)}</span>
         <h3>${escapeHTML(item.title)}</h3>
-        <time>${escapeHTML(formatDate(item.date))}</time>
+        ${item.date ? `<time>${escapeHTML(formatDate(item.date))}</time>` : ""}
         <p>${escapeHTML(item.text || "")}</p>
-        ${inlineEmbed}
-        ${url ? `<a class="btn secondary" href="${escapeHTML(url)}" target="_blank" rel="noopener">Ver publicación</a>` : ""}
+        ${inlineEmbed || `<div class="empty-box small">No se pudo generar una vista incrustada para este enlace. Puedes abrirlo desde el botón.</div>`}
+        ${url ? `<a class="btn secondary" href="${escapeHTML(url)}" target="_blank" rel="noopener">Abrir publicación</a>` : ""}
       </article>
     `;
   }).join("");
+
   if (window.instgrm?.Embeds?.process) window.instgrm.Embeds.process();
   if (window.twttr?.widgets?.load) window.twttr.widgets.load(grid);
+  if (window.tiktokEmbedLoad) window.tiktokEmbedLoad();
 }
 
 function setSocialFilter(filter) {
@@ -394,6 +412,33 @@ function normalizeProfileUser(url, marker) {
   return part.split(/[/?#]/)[0].replace(/^@/, "");
 }
 
+function normalizePlatform(value) {
+  const platform = String(value || "").toLowerCase().trim();
+  if (["x", "twitter"].includes(platform)) return "twitter";
+  if (["instagram", "ig"].includes(platform)) return "instagram";
+  if (["tiktok", "tik tok"].includes(platform)) return "tiktok";
+  if (["facebook", "fb"].includes(platform)) return "facebook";
+  return "";
+}
+
+function platformLabelFromKey(key) {
+  return {
+    facebook: "Facebook",
+    twitter: "X/Twitter",
+    instagram: "Instagram",
+    tiktok: "TikTok"
+  }[key] || "Red social";
+}
+
+function detectPlatformFromUrl(url) {
+  const clean = String(url || "").toLowerCase();
+  if (clean.includes("instagram.com/")) return "instagram";
+  if (clean.includes("tiktok.com/")) return "tiktok";
+  if (clean.includes("x.com/") || clean.includes("twitter.com/")) return "twitter";
+  if (clean.includes("facebook.com/") || clean.includes("fb.watch/")) return "facebook";
+  return "";
+}
+
 function isInstagramPostUrl(url) {
   return /instagram\.com\/(p|reel|tv)\//i.test(String(url || ""));
 }
@@ -402,8 +447,21 @@ function isTikTokVideoUrl(url) {
   return /tiktok\.com\/@[^/]+\/video\//i.test(String(url || ""));
 }
 
+function getTikTokVideoId(url) {
+  return String(url || "").match(/\/video\/(\d+)/)?.[1] || "";
+}
+
+function isXPostUrl(url) {
+  return /(x|twitter)\.com\/[^/]+\/status\/\d+/i.test(String(url || ""));
+}
+
+function isFacebookPostUrl(url) {
+  const clean = String(url || "");
+  return /facebook\.com\/.+\/(posts|videos|photos|reel|permalink\.php|story\.php|share)\/?/i.test(clean) || /fb\.watch\//i.test(clean);
+}
+
 function renderInlinePostEmbed(item) {
-  const platform = String(item.platform || "").toLowerCase();
+  const platform = normalizePlatform(item.platform || detectPlatformFromUrl(item.url));
   const url = validUrl(item.url);
   if (!url) return "";
 
@@ -418,13 +476,37 @@ function renderInlinePostEmbed(item) {
     `;
   }
 
+  if (platform === "twitter" && isXPostUrl(url)) {
+    const embedUrl = url.replace("https://x.com/", "https://twitter.com/").replace("http://x.com/", "https://twitter.com/");
+    loadScriptOnce("https://platform.twitter.com/widgets.js", "twitter-widgets", () => {
+      if (window.twttr?.widgets?.load) window.twttr.widgets.load();
+    });
+    return `
+      <div class="post-embed x-post">
+        <blockquote class="twitter-tweet" data-theme="dark" data-dnt="true">
+          <a href="${escapeHTML(embedUrl)}">Ver publicación en X/Twitter</a>
+        </blockquote>
+      </div>
+    `;
+  }
+
   if (platform === "tiktok" && isTikTokVideoUrl(url)) {
+    const videoId = getTikTokVideoId(url);
     loadScriptOnce("https://www.tiktok.com/embed.js", "tiktok-embed-js");
     return `
       <div class="post-embed tiktok-post">
-        <blockquote class="tiktok-embed" cite="${escapeHTML(url)}" style="max-width: 605px; min-width: 280px;">
+        <blockquote class="tiktok-embed" cite="${escapeHTML(url)}" ${videoId ? `data-video-id="${escapeHTML(videoId)}"` : ""} style="max-width: 605px; min-width: 280px;">
           <section><a target="_blank" href="${escapeHTML(url)}">Ver video en TikTok</a></section>
         </blockquote>
+      </div>
+    `;
+  }
+
+  if (platform === "facebook" && isFacebookPostUrl(url)) {
+    const src = `https://www.facebook.com/plugins/post.php?href=${encodeURIComponent(url)}&show_text=true&width=500`;
+    return `
+      <div class="post-embed facebook-post">
+        <iframe title="Publicación de Facebook" src="${src}" width="500" height="610" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
       </div>
     `;
   }
