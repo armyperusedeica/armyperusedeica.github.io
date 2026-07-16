@@ -6,7 +6,9 @@ const FALLBACK_CONFIG = {
   instagramUrl: "https://www.instagram.com/TU_USUARIO/",
   tiktokUrl: "https://www.tiktok.com/@TU_USUARIO",
   sedeCalendarEmbedUrl: "",
-  officialCalendarEmbedUrl: ""
+  officialCalendarEmbedUrl: "",
+  officialCalendarLabel: "BTS oficial",
+  officialCalendarCredit: "Calendario BTS oficial compartido por foreverpurple130613@gmail.com"
 };
 
 const FALLBACK_EVENTS = [
@@ -426,8 +428,16 @@ function renderCalendarEmbeds() {
   if (!wrap || !grid) return;
 
   const embeds = [
-    { title: "Sede Ica", url: state.config.sedeCalendarEmbedUrl },
-    { title: "BTS oficial", url: state.config.officialCalendarEmbedUrl }
+    {
+      title: "Sede Ica",
+      url: state.config.sedeCalendarEmbedUrl,
+      credit: state.config.sedeCalendarCredit || "Calendario propio de ARMY PERÚ Sede Ica"
+    },
+    {
+      title: state.config.officialCalendarLabel || "BTS oficial",
+      url: state.config.officialCalendarEmbedUrl,
+      credit: state.config.officialCalendarCredit || "Calendario BTS oficial compartido por foreverpurple130613@gmail.com"
+    }
   ].filter((item) => item.url);
 
   if (!embeds.length) {
@@ -436,8 +446,18 @@ function renderCalendarEmbeds() {
   }
 
   wrap.hidden = false;
+  grid.classList.toggle("single", embeds.length === 1);
   grid.innerHTML = embeds
-    .map((item) => `<iframe title="Calendario ${item.title}" src="${item.url}" loading="lazy"></iframe>`)
+    .map((item) => `
+      <article class="google-calendar-card">
+        <div class="google-calendar-head">
+          <span class="badge ${item.title.toLowerCase().includes("sede") ? "sede" : "bts"}">${item.title}</span>
+          <span class="muted-mini">Actualización automática</span>
+        </div>
+        <iframe title="Calendario ${item.title}" src="${item.url}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        ${item.credit ? `<p class="calendar-credit">Crédito: ${item.credit}</p>` : ""}
+      </article>
+    `)
     .join("");
 }
 

@@ -52,3 +52,23 @@ Edita `data/config.json` para actualizar Discord, Facebook, X/Twitter, Instagram
 ## Publicación en GitHub Pages
 
 Sube estos archivos directamente a la raíz del repositorio `armyperusedeica.github.io`. El archivo `index.html` debe quedar visible en la primera pantalla del repositorio, no dentro de una carpeta.
+
+
+## Calendario BTS oficial conectado
+
+El archivo `data/config.json` ya incluye el calendario BTS oficial en `officialCalendarEmbedUrl`.
+
+El enlace usa estos parámetros para mejorar privacidad visual:
+
+- `showTitle=0`: oculta el título/encabezado del calendario.
+- `showCalendars=0`: oculta la lista de calendarios.
+- `showTz=0`: oculta la zona horaria.
+- `showPrint=0`: oculta el botón de impresión.
+- `mode=AGENDA`: muestra una vista de agenda más limpia.
+
+Nota: aunque el nombre visual está oculto, el correo o ID del calendario sigue dentro del código HTML del iframe. Si no quieres que se exponga un correo personal al inspeccionar el código, usa un calendario secundario con ID tipo `group.calendar.google.com` o una cuenta institucional/fanbase.
+
+
+## Crédito del calendario BTS oficial
+
+El texto visible debajo del calendario BTS oficial se controla en `data/config.json` mediante `officialCalendarCredit`. Actualmente acredita: `foreverpurple130613@gmail.com`.

@@ -104,9 +104,20 @@
             <p class="eyebrow">Agenda</p>
             <h2 id="calendar-title">Calendario de actividades</h2>
             <p>
-              Diferencia eventos de la sede y fechas oficiales de BTS. Las admins pueden actualizar los eventos desde
-              <code>data/events.json</code> o conectar calendarios públicos en <code>data/config.json</code>.
+              Revisa aquí el calendario oficial de BTS sincronizado desde Google Calendar y el calendario interno de la sede para actividades locales.
             </p>
+          </div>
+
+          <div class="calendar-embed-wrap panel-card" id="calendarEmbedWrap" hidden>
+            <div class="panel-topline">
+              <div>
+                <p class="eyebrow">Sincronizado</p>
+                <h3>Calendario BTS oficial</h3>
+              </div>
+              <span class="sync-pill">Google Calendar</span>
+            </div>
+            <p class="muted-copy">Se actualiza automáticamente desde el calendario conectado. Debajo del calendario se muestra el crédito correspondiente a la fuente compartida.</p>
+            <div class="embed-grid" id="calendarEmbeds"></div>
           </div>
 
           <div class="calendar-tools panel-card">
@@ -145,16 +156,6 @@
             </aside>
           </div>
 
-          <div class="calendar-embed-wrap panel-card" id="calendarEmbedWrap" hidden>
-            <div class="panel-topline">
-              <div>
-                <p class="eyebrow">Calendarios conectados</p>
-                <h3>Google Calendar</h3>
-              </div>
-            </div>
-            <p class="muted-copy">Esta zona aparece cuando coloquen enlaces públicos de Google Calendar en <code>data/config.json</code>.</p>
-            <div class="embed-grid" id="calendarEmbeds"></div>
-          </div>
         </section>
 
         <section class="view page-view" id="redes" aria-labelledby="social-title">

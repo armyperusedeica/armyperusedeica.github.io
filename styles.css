@@ -789,6 +789,15 @@ main { min-height: calc(100svh - 165px); }
   border-radius: 18px;
   background: #fff;
 }
+.calendar-credit {
+  margin: 10px 4px 0;
+  color: rgba(255,255,255,0.68);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.calendar-credit strong { color: #fff; }
+
 
 .social-grid,
 .streaming-grid {
