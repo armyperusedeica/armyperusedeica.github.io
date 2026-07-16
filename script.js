@@ -75,6 +75,20 @@ function validUrl(value) {
   return url;
 }
 
+function normalizeXTimelineUrl(url) {
+  const clean = validUrl(url);
+  if (!clean) return "";
+  try {
+    const parsed = new URL(clean);
+    const user = parsed.pathname.split("/").filter(Boolean)[0] || "";
+    if (!user) return clean;
+    // El widget oficial sigue siendo más estable con twitter.com aunque el perfil sea de X.
+    return `https://twitter.com/${user}`;
+  } catch (_) {
+    return clean.replace("https://x.com/", "https://twitter.com/").replace("http://x.com/", "https://twitter.com/");
+  }
+}
+
 function formatDate(dateString) {
   if (!dateString) return "Fecha por confirmar";
   const date = new Date(`${dateString}T12:00:00`);
@@ -195,9 +209,25 @@ function renderSocialEmbeds() {
     cards.push(`<section class="embed-card"><h3>Facebook</h3><iframe title="Facebook ARMY Perú Sede Ica" src="${src}" height="560" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe></section>`);
   }
 
-  if ((state.socialFilter === "all" || state.socialFilter === "twitter") && xUrl) {
-    cards.push(`<section class="embed-card"><h3>X/Twitter</h3><a class="twitter-timeline" data-height="560" data-theme="dark" href="${escapeHTML(xUrl)}">Tweets de ARMY Perú Sede Ica</a></section>`);
-    loadScriptOnce("https://platform.twitter.com/widgets.js", "twitter-widgets", () => { if (window.twttr?.widgets?.load) window.twttr.widgets.load(grid); });
+  const xEmbedUrl = normalizeXTimelineUrl(xUrl);
+  if ((state.socialFilter === "all" || state.socialFilter === "twitter") && xEmbedUrl) {
+    cards.push(`
+      <section class="embed-card twitter-embed-card">
+        <h3>X/Twitter</h3>
+        <a class="twitter-timeline"
+           data-height="560"
+           data-theme="dark"
+           data-chrome="noheader nofooter noborders transparent"
+           href="${escapeHTML(xEmbedUrl)}">
+          Tweets de ARMY Perú Sede Ica
+        </a>
+        <div class="twitter-fallback" hidden>
+          <strong>No se pudo cargar X/Twitter en este navegador.</strong><br>
+          Puede ocurrir por bloqueadores, cookies o protección de rastreo.
+          <a href="${escapeHTML(xUrl)}" target="_blank" rel="noopener">Abrir perfil en X</a>.
+        </div>
+      </section>
+    `);
   }
 
   if ((state.socialFilter === "all" || state.socialFilter === "instagram") && instagramUrl) {
@@ -208,13 +238,30 @@ function renderSocialEmbeds() {
     const user = tiktokUrl.split("/@")[1]?.replace(/\/$/, "") || "";
     if (user) {
       cards.push(`<section class="embed-card"><h3>TikTok</h3><blockquote class="tiktok-embed" cite="${escapeHTML(tiktokUrl)}" data-unique-id="${escapeHTML(user)}" data-embed-type="creator" style="max-width: 780px; min-width: 288px;"><section><a target="_blank" href="${escapeHTML(tiktokUrl)}">@${escapeHTML(user)}</a></section></blockquote></section>`);
-      loadScriptOnce("https://www.tiktok.com/embed.js", "tiktok-embed-js");
     }
   }
 
   grid.innerHTML = cards.join("");
   grid.style.display = cards.length ? "grid" : "none";
-  if (window.twttr?.widgets?.load) window.twttr.widgets.load(grid);
+
+  if ((state.socialFilter === "all" || state.socialFilter === "twitter") && xEmbedUrl) {
+    loadScriptOnce("https://platform.twitter.com/widgets.js", "twitter-widgets", () => {
+      if (window.twttr?.widgets?.load) window.twttr.widgets.load(grid);
+    });
+    if (window.twttr?.widgets?.load) window.twttr.widgets.load(grid);
+    setTimeout(() => {
+      const twitterCard = grid.querySelector(".twitter-embed-card");
+      const timeline = twitterCard?.querySelector(".twitter-timeline");
+      const iframe = twitterCard?.querySelector("iframe");
+      const fallback = twitterCard?.querySelector(".twitter-fallback");
+      if (twitterCard && timeline && !iframe && fallback) fallback.hidden = false;
+    }, 6500);
+  }
+
+  if ((state.socialFilter === "all" || state.socialFilter === "tiktok") && tiktokUrl) {
+    loadScriptOnce("https://www.tiktok.com/embed.js", "tiktok-embed-js");
+  }
+
   if (window.instgrm?.Embeds?.process) window.instgrm.Embeds.process();
 }
 

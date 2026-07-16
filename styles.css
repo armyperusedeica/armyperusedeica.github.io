@@ -537,3 +537,17 @@ button, input, select { font: inherit; }
 @media (max-width: 760px) {
   .social-card.with-embed { grid-column: span 1; }
 }
+
+.twitter-fallback {
+  margin-top: 16px;
+  padding: 18px;
+  border: 1px dashed rgba(255,255,255,0.28);
+  border-radius: 18px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+.twitter-fallback a {
+  color: var(--cream);
+  text-decoration: underline;
+  font-weight: 800;
+}
